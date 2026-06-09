@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="googlebot" content="noindex, nofollow">
+  <title>Merit Generator</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --void: #0A0A0A;
+      --parchment: #F0EDE6;
+      --white: #FFFFFF;
+      --amber: #C8963E;
+      --amber-dim: rgba(200, 150, 62, 0.15);
+      --amber-glow: rgba(200, 150, 62, 0.4);
+      --grey-mid: #888;
+      --grey-light: #aaa;
+      --border-dark: rgba(255, 255, 255, 0.08);
+      --border-light: rgba(0, 0, 0, 0.1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--void);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 60%, rgba(200, 150, 62, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 50% 70%, rgba(200, 150, 62, 0.12) 0%, transparent 50%);
+    }
+
+    /* The ring — signature element */
+    .ring-container {
+      position: absolute;
+      left: 50%;
+      top: 42%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .ring {
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 2px solid var(--amber);
+      box-shadow:
+        0 0 40px 2px var(--amber-glow),
+        inset 0 0 40px 2px rgba(200, 150, 62, 0.05);
+      animation: ring-pulse 4s ease-in-out infinite;
+      opacity: 0.6;
+    }
+
+    .ring-inner {
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(200, 150, 62, 0.2);
+      animation: ring-pulse 4s ease-in-out infinite reverse;
+    }
+
+    @keyframes ring-pulse {
+
+      0%,
+      100% {
+        opacity: 0.6;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.9;
+        transform: scale(1.02);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .ring,
+      .ring-inner {
+        animation: none;
+      }
+    }
+
+    .hero-breadcrumb {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: #a0a0a0;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 0.92;
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+    }
+
+    .hero-subtitle {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--grey-light);
+      margin-top: 20px;
+      max-width: 480px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-footnote {
+      position: absolute;
+      bottom: 80px;
+      right: 48px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ── SECTION UTILITY ── */
+    section {
+      position: relative;
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--amber);
+      margin: 16px 0 40px;
+    }
+
+    /* ── CONSECRATED (dark bg) ── */
+    .consecrated {
+      background: var(--void);
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .consecrated img {
+      width: 100%;
+      border-radius: 2px;
+      filter: brightness(0.9);
+    }
+
+    .consecrated-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--grey-mid);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    .pull-quote {
+      font-size: clamp(22px, 3vw, 36px);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    .body-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 20px;
+    }
+
+    /* ── CORE PROPOSITION (light bg) ── */
+    .core-prop {
+      background: var(--parchment);
+      color: var(--void);
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .core-prop .section-label {
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    .core-prop .section-divider {
+      background: var(--void);
+    }
+
+    .core-prop .pull-quote {
+      color: var(--void);
+      font-size: clamp(20px, 2.5vw, 30px);
+    }
+
+    .core-prop .body-text {
+      color: rgba(0, 0, 0, 0.72);
+    }
+
+    .schema-box {
+      background: rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      padding: 32px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      line-height: 2;
+      color: rgba(0, 0, 0, 0.68);
+      white-space: pre;
+      border-radius: 2px;
+    }
+
+    .schema-assumption {
+      margin-top: 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.52);
+      line-height: 1.6;
+    }
+
+    /* ── CATEGORY (light bg) ── */
+    .category {
+      background: var(--parchment);
+      color: var(--void);
+      padding: 0 48px 120px;
+    }
+
+    .category .section-label {
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    .category .section-divider {
+      background: var(--void);
+      margin-bottom: 48px;
+    }
+
+    .category-intro {
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 500;
+      max-width: 520px;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      color: var(--void);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 56px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .card {
+      background: var(--parchment);
+      padding: 36px 32px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .card-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.55);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: rgba(0, 0, 0, 0.75);
+    }
+
+    .category-coda {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--void);
+      margin-top: 48px;
+    }
+
+    /* ── ARCHITECTURE (dark) ── */
+    .architecture {
+      background: var(--void);
+      padding: 120px 48px;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 64px 0;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .flow-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .flow-box {
+      padding: 14px 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .flow-box.dark {
+      background: rgba(200, 150, 62, 0.12);
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .flow-box.bright {
+      background: var(--white);
+      color: var(--void);
+      border-color: var(--white);
+    }
+
+    .flow-arrow {
+      width: 28px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -3px;
+      border-top: 3px solid transparent;
+      border-bottom: 3px solid transparent;
+      border-left: 5px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .arch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 16px;
+    }
+
+    .arch-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.80);
+    }
+
+    .arch-coda {
+      font-size: clamp(17px, 2vw, 22px);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    /* ── OUTPUT TRACE (light) ── */
+    .output-trace {
+      background: var(--parchment);
+      color: var(--void);
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .output-trace .section-label {
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    .output-trace .section-divider {
+      background: var(--void);
+    }
+
+    .trace-img-wrap {
+      position: relative;
+    }
+
+    .trace-img-wrap img {
+      width: 100%;
+      border-radius: 2px;
+    }
+
+    .trace-pull {
+      font-size: clamp(20px, 2.5vw, 30px);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+      color: var(--void);
+    }
+
+    .trace-context {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.55);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .trace-body {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(0, 0, 0, 0.72);
+    }
+
+    /* ── POTENTIAL OUTPUTS (light) ── */
+    .outputs {
+      background: var(--parchment);
+      color: var(--void);
+      padding: 0 48px 120px;
+    }
+
+    .outputs .section-label {
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    .outputs .section-divider {
+      background: var(--void);
+      margin-bottom: 48px;
+    }
+
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .output-card {
+      background: var(--parchment);
+      padding: 36px 28px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .output-card-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.55);
+      margin-bottom: 16px;
+    }
+
+    .output-card p {
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(0, 0, 0, 0.72);
+    }
+
+    .output-coda {
+      margin-top: 48px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--void);
+    }
+
+    /* ── MERIT STUDIO (dark) ── */
+    .studio {
+      background: var(--void);
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .studio-intro {
+      font-size: clamp(20px, 2.5vw, 30px);
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 48px;
+      letter-spacing: -0.01em;
+    }
+
+    .studio-features {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .studio-feature-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+
+    .studio-feature-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.80);
+    }
+
+    .studio-coda {
+      margin-top: 40px;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .studio img {
+      width: 100%;
+      border-radius: 2px;
+      filter: brightness(0.8);
+    }
+
+    /* ── BEACON (dark) ── */
+    .beacon {
+      background: #060606;
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .beacon-intro {
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 48px;
+      letter-spacing: -0.01em;
+    }
+
+    .beacon-rows {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .beacon-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 24px;
+      padding: 24px 0;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .beacon-row-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .beacon-row-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .beacon-img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 2px;
+      filter: brightness(0.7);
+    }
+
+    .beacon-breadcrumb {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.45);
+      margin-top: 48px;
+    }
+
+    /* ── ARTISTS (light) ── */
+    .artists {
+      background: var(--parchment);
+      color: var(--void);
+      padding: 120px 48px;
+    }
+
+    .artists .section-label {
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    .artists .section-divider {
+      background: var(--void);
+    }
+
+    .artists-intro {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(0, 0, 0, 0.72);
+      max-width: 760px;
+      margin-bottom: 56px;
+    }
+
+    .artist-rows {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .artist-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 40px;
+      padding: 28px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      align-items: start;
+    }
+
+    .artist-name {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--void);
+      padding-top: 2px;
+    }
+
+    .artist-bio {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(0, 0, 0, 0.72);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--void);
+      border-top: 1px solid var(--border-dark);
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+    }
+
+    .footer-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.50);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-slash {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.40);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── RING DIVIDER ── */
+    .ring-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+      background: inherit;
+      gap: 24px;
+    }
+
+    .ring-divider::before,
+    .ring-divider::after {
+      content: '';
+      height: 1px;
+      flex: 1;
+      background: var(--border-dark);
+    }
+
+    .ring-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(200, 150, 62, 0.4);
+      position: relative;
+    }
+
+    .ring-dot::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      opacity: 0.6;
+    }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      nav {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 0 24px 60px;
+      }
+
+      .ring {
+        width: 300px;
+        height: 300px;
+      }
+
+      .consecrated,
+      .core-prop,
+      .output-trace,
+      .studio,
+      .beacon,
+      .arch-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .category,
+      .outputs,
+      .artists {
+        padding: 80px 24px 80px;
+      }
+
+      .consecrated,
+      .core-prop,
+      .architecture,
+      .output-trace,
+      .studio,
+      .beacon {
+        padding: 80px 24px;
+      }
+
+      .card-grid,
+      .output-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .beacon-img {
+        height: 300px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+
+    /* ── PROMPT THE GENERATOR ── */
+    .prompt-section {
+      background: #060606;
+      padding: 120px 48px;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      justify-content: center;
+    }
+
+    .prompt-container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .prompt-intro {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+
+    .generator-form {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey-light);
+    }
+
+    .form-label .required {
+      color: var(--amber);
+    }
+
+    .form-input {
+      font-family: 'Space Grotesk', sans-serif;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-dark);
+      color: var(--white);
+      padding: 14px 18px;
+      font-size: 15px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+
+    .form-input:focus {
+      border-color: var(--amber);
+      box-shadow: 0 0 10px rgba(200, 150, 62, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    textarea.form-input {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .error-message {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: #ff4d4d;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .submit-btn {
+      align-self: flex-start;
+      position: relative;
+      background: transparent;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      padding: 14px 32px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+      transition: color 0.3s, border-color 0.3s;
+      border-radius: 2px;
+      margin-top: 10px;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(200, 150, 62, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    .submit-btn:hover {
+      color: var(--white);
+      border-color: var(--white);
+      box-shadow: 0 0 20px var(--amber-glow);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .form-status {
+      margin-top: 40px;
+      display: none;
+    }
+
+    .status-terminal {
+      background: #030303;
+      border: 1px solid var(--border-dark);
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .terminal-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.red {
+      background: #ff5f56;
+    }
+
+    .terminal-dot.yellow {
+      background: #ffbd2e;
+    }
+
+    .terminal-dot.green {
+      background: #27c93f;
+    }
+
+    .terminal-title {
+      font-size: 9px;
+      color: var(--grey-mid);
+      margin-left: 10px;
+      letter-spacing: 0.1em;
+    }
+
+    .terminal-body {
+      padding: 18px;
+      font-size: 11px;
+      line-height: 1.8;
+      color: #00ff66;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 900px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .prompt-section {
+        padding: 80px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">Merit Generator</span>
+    <ul class="nav-links">
+      <li><a href="#proposition">Proposition</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#outputs">Outputs</a></li>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#beacon">Beacon</a></li>
+      <li><a href="#artists">Artists</a></li>
+      <li><a href="#prompt-generator">Prompt</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="ring-container">
+      <div class="ring"></div>
+      <div class="ring-inner"></div>
+    </div>
+    <span class="hero-breadcrumb">NORTH / EAST / SOUTH / WEST → MERIT</span>
+    <h1 class="hero-title">Merit<br>Generator</h1>
+    <p class="hero-subtitle">Deliberative art system for structured disagreement,<br>memory, consensus, and physical
+      outputs</p>
+    <span class="hero-footnote">MERIT GENERATOR / 01</span>
+  </section>
+
+  <!-- CORE PROPOSITION -->
+  <section class="core-prop" id="proposition">
+    <div>
+      <span class="section-label" style="color:rgba(0,0,0,0.4)">Core Proposition</span>
+      <div class="section-divider" style="background:var(--void)"></div>
+      <p class="pull-quote">"Merit Generator is not simply an AI artwork. It stages structured deliberation,
+        disagreement, consensus formation, memory, and philosophical output through a visible sculptural form."</p>
+      <p class="body-text">The system transforms AI from an invisible assistant into an observable ritual of reasoning.
+        It creates outputs that can become texts, objects, editions, archives, and site-specific activations.</p>
+    </div>
+    <div>
+      <div class="schema-box">+------------------------------+
+        | NORTH EAST SOUTH WEST |
+        | |
+        | DELIBERATION FIELD |
+        | |
+        | CONSENSUS -> TEXT / OBJECT |
+        | EDITION / ARCHIVE / BEACON |
+        +------------------------------+</div>
+      <p class="schema-assumption">Core assumption: the strongest presentation is the visible working system first, then
+        the theory.</p>
+    </div>
+  </section>
+
+  <!-- A NEW CATEGORY -->
+  <section class="category" id="category">
+    <span class="section-label" style="color:rgba(0,0,0,0.4)">A New Category</span>
+    <div class="section-divider" style="background:var(--void)"></div>
+    <p class="category-intro">The project is not a chatbot wrapper. It is a physical system where argument, memory,
+      consensus, and output are part of the artwork.</p>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-label">Sculpture</span>
+        <p>Presence, aura, installation value, documentation value.</p>
+      </div>
+      <div class="card">
+        <span class="card-label">Reasoning Engine</span>
+        <p>Agents deliberate, challenge, revise, and converge.</p>
+      </div>
+      <div class="card">
+        <span class="card-label">Memory Organism</span>
+        <p>Past outputs shape future context and system behavior.</p>
+      </div>
+      <div class="card">
+        <span class="card-label">Publishing Machine</span>
+        <p>Statements become prints, books, objects, archives, and editions.</p>
+      </div>
+    </div>
+    <p class="category-coda">Art object + systems architecture + public reasoning ritual.</p>
+  </section>
+
+  <!-- DELIBERATIVE ARCHITECTURE -->
+  <section class="architecture" id="architecture">
+    <span class="section-label">Deliberative Architecture</span>
+    <div class="section-divider"></div>
+
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="flow-box bright">PROMPT</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-box dark">NORTH</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-box dark">EAST</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-box dark">SOUTH</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-box dark">WEST</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-box bright">MERIT AGREEMENT</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-box bright">FINAL CONSENSUS</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-box bright">CLEAR LIGHT</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-box bright">OUTPUT ARCHIVE</div>
+      </div>
+    </div>
+
+    <div class="arch-grid">
+      <p class="arch-desc">Clear Light is the primary synthesizer module. It reads the discussion and consensus after
+        the agents converge, then produces a higher-level synthesis and structured output.</p>
+      <p class="arch-coda">The art is the cycle:<br>prompt → disagreement →<br>memory → convergence → artifact.</p>
+    </div>
+  </section>
+
+  <!-- RECENT OUTPUT TRACE -->
+  <section class="output-trace" id="trace">
+    <div class="trace-img-wrap">
+      <span class="section-label" style="color:rgba(0,0,0,0.4)">Recent Output Trace</span>
+      <div class="section-divider" style="background:var(--void)"></div>
+    </div>
+    <div>
+      <p class="trace-pull">"Compassion arises not as a superimposed value, but as an intuitive response to this
+        relational emptiness."</p>
+      <p class="trace-context">Recent discussion output, ethical action through the lens of kindness.</p>
+      <p class="trace-body">The transcript is not only documentation. It is raw material. A selected deliberation can
+        become a print, a 3D form, a spoken performance, a projection, a book page, or a collectible object.</p>
+    </div>
+  </section>
+
+  <!-- POTENTIAL OUTPUTS -->
+  <section class="outputs" id="outputs">
+    <span class="section-label" style="color:rgba(0,0,0,0.4)">Potential Outputs</span>
+    <div class="section-divider" style="background:var(--void)"></div>
+    <div class="output-grid">
+      <div class="output-card">
+        <div class="output-card-label">Plotter Prints</div>
+        <p>Agent trajectories, consensus structures, token rhythms, and disagreement maps.</p>
+      </div>
+      <div class="output-card">
+        <div class="output-card-label">3D Prints</div>
+        <p>Language-derived meshes, symbolic forms, diagrams, and object fossils.</p>
+      </div>
+      <div class="output-card">
+        <div class="output-card-label">Resin Objects</div>
+        <p>Encased 3D outputs, splats, artifacts, and selected discussion fragments.</p>
+      </div>
+      <div class="output-card">
+        <div class="output-card-label">Books</div>
+        <p>Statements of Merit, consensus essays, transcripts, and annotated runs.</p>
+      </div>
+      <div class="output-card">
+        <div class="output-card-label">Live Ephemera</div>
+        <p>Thermal receipts, signed prompt sheets, session cards, and time-stamped outputs.</p>
+      </div>
+      <div class="output-card">
+        <div class="output-card-label">Activations</div>
+        <p>Projection, LED, sound, voice, beacon, and site-responsive public output.</p>
+      </div>
+    </div>
+    <p class="output-coda">Output is not secondary merchandise. Output is how the system enters the world as collectible
+      form.</p>
+  </section>
+
+  <!-- MERIT STUDIO -->
+  <section class="studio" id="studio">
+    <div>
+      <span class="section-label">Merit Studio</span>
+      <div class="section-divider"></div>
+      <p class="studio-intro">Merit Studio is the physical space where Merit Generator lives, is exhibited, worked on,
+        and allowed to evolve.</p>
+      <div class="studio-features">
+        <div>
+          <div class="studio-feature-label">Working Installation</div>
+          <p class="studio-feature-text">Not a storage room or passive display. The studio is where the system runs,
+            changes, is observed, repaired, and documented.</p>
+        </div>
+        <div>
+          <div class="studio-feature-label">Experimental Access</div>
+          <p class="studio-feature-text">Accessible for testing prompts, agent behavior, output formats, material
+            translations, and public-facing installation modes.</p>
+        </div>
+        <div>
+          <div class="studio-feature-label">Living Archive</div>
+          <p class="studio-feature-text">The space holds the traces of deliberations: transcripts, printed outputs,
+            prototypes, sculptural units, and future editions.</p>
+        </div>
+      </div>
+      <p class="studio-coda">The studio is not backstage. It is part of the instrument.</p>
+    </div>
+    <div>
+      <!-- placeholder visual for studio image -->
+      <div
+        style="width:100%;height:420px;background:linear-gradient(135deg,#111 0%,#1a1a1a 50%,#0d0d0d 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.06);">
+        <div style="text-align:center;">
+          <div
+            style="width:80px;height:80px;border-radius:50%;border:1px solid rgba(200,150,62,0.4);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;">
+            <div style="width:20px;height:20px;border-radius:50%;background:rgba(200,150,62,0.5);"></div>
+          </div>
+          <p
+            style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.1em;">
+            MERIT STUDIO</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MERIT BEACON -->
+  <section class="beacon" id="beacon">
+    <div>
+      <span class="section-label">Merit Beacon</span>
+      <div class="section-divider"></div>
+      <p class="beacon-intro">Merit Beacon is the outward signal of Merit Generator: a translation of deliberative
+        outputs into public light, language, limited artworks, and collective gathering.</p>
+      <div class="beacon-rows">
+        <div class="beacon-row">
+          <span class="beacon-row-label">As an Output</span>
+          <p class="beacon-row-text">Merit statements, consensus traces, and system logs become scores for light,
+            plotter prints, 3D prints, projections, and editioned objects.</p>
+        </div>
+        <div class="beacon-row">
+          <span class="beacon-row-label">As an Event</span>
+          <p class="beacon-row-text">A public activation around a living AI sculpture: opening gathering, live
+            deliberation, artist talks, documentation, and limited releases.</p>
+        </div>
+        <div class="beacon-row">
+          <span class="beacon-row-label">As a Signal</span>
+          <p class="beacon-row-text">A beacon for merit, not commerce alone: a visible ritual of ethical computation,
+            attention, and shared responsibility.</p>
+        </div>
+      </div>
+      <p class="beacon-breadcrumb">NORTH / EAST / SOUTH / WEST → MERIT → BEACON</p>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <div
+        style="width:100%;height:500px;background:linear-gradient(180deg,#060606 0%,#0a0a14 40%,#060606 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.04);position:relative;overflow:hidden;">
+        <!-- simulated beacon building -->
+        <div
+          style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:80%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);">
+          <div
+            style="position:absolute;top:20%;left:0;right:0;height:6px;background:linear-gradient(90deg,#1e3aff,#ff2200);opacity:0.8;box-shadow:0 0 20px 4px rgba(100,100,255,0.5);">
+          </div>
+        </div>
+        <p
+          style="position:absolute;bottom:20px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:0.1em;">
+          MERIT BEACON / OUTPUT</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSECRATED SYSTEM -->
+  <section class="consecrated" id="consecrated">
+    <div>
+      <span class="section-label">Consecrated System</span>
+      <div class="section-divider"></div>
+      <div class="consecrated-caption">High Tibetan lamas performing a Rabne consecration ritual around Merit Generator.
+      </div>
+    </div>
+    <div>
+      <p class="pull-quote">"Merit Generator is the world's first AI sculptural art project consecrated by high Tibetan
+        lamas."</p>
+      <p class="body-text">The lamas performed a Rabne ritual, usually reserved for auspicious and precious objects such
+        as statues, thangkas, or stupas.</p>
+      <p class="body-text">The system is not only a technical apparatus. It is a consecrated sculptural object: a
+        machine that generates merit for all. Engine for goodness.</p>
+    </div>
+  </section>
+
+  <!-- ARTISTS -->
+  <section class="artists" id="artists">
+    <span class="section-label" style="color:rgba(0,0,0,0.4)">Artist Bios</span>
+    <div class="section-divider" style="background:var(--void)"></div>
+    <p class="artists-intro">Merit Generator is created by Mehow Skalski, Ori Carino, and Tavius Koktavy. The project
+      brings together AI systems, contemplative art, spatial media, sculptural technology, and public-facing cultural
+      outputs.</p>
+    <div class="artist-rows">
+      <div class="artist-row">
+        <span class="artist-name">Mehow Skalski</span>
+        <p class="artist-bio">Technology and new media artist working across AI systems, VR/AR, 3D scanning, 360 video,
+          immersive documentation, sculptural technology, systems architecture, and logic. Co-creator of Merit Generator
+          and Merit Beacon.</p>
+      </div>
+      <div class="artist-row">
+        <span class="artist-name">Ori Carino</span>
+        <p class="artist-bio">NYC-based artist whose work spans painting, installation, ritual imagery, and contemporary
+          Buddhist visual culture. A trained thangka painter and co-creator of Merit Generator and Merit Beacon, with
+          work extending into public-facing outputs.</p>
+      </div>
+      <div class="artist-row">
+        <span class="artist-name">Tavius Koktavy</span>
+        <p class="artist-bio">Co-creator of Merit Generator and Merit Beacon, augmented and virtual reality expert, and
+          artist working with 3D scanning projects and system logic.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASK THE GENERATOR -->
+  <section class="prompt-section" id="prompt-generator">
+    <div class="prompt-container">
+      <span class="section-label">Initiate Deliberation</span>
+      <div class="section-divider"></div>
+      <p class="prompt-intro">Submit an inquiry or ethical prompt to the Merit Generator. The system will route it to
+        the North, East, South, and West agents for deliberation.</p>
+
+      <form id="generator-form" class="generator-form" novalidate>
+        <div class="form-group">
+          <label for="user-prompt" class="form-label">Deliberation Prompt <span class="required">*</span></label>
+          <textarea id="user-prompt" name="prompt" class="form-input"
+            placeholder="e.g., How does structured disagreement lead to consensus in a digitized world?"
+            required></textarea>
+          <span class="error-message" id="prompt-error">Prompt is required to transmit.</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="user-name" class="form-label">Name</label>
+            <input type="text" id="user-name" name="name" class="form-input" placeholder="Optional">
+          </div>
+          <div class="form-group">
+            <label for="user-email" class="form-label">Email Address <span class="required">*</span></label>
+            <input type="email" id="user-email" name="email" class="form-input" placeholder="you@domain.com" required>
+            <span class="error-message" id="email-error">A valid email is required to transmit.</span>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span class="btn-text">Transmit to Field</span>
+          <span class="btn-glow"></span>
+        </button>
+      </form>
+
+      <div class="form-status" id="form-status" aria-live="polite">
+        <div class="status-terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">MG-CONNECTION-LOG</span>
+          </div>
+          <div class="terminal-body" id="status-text">SYSTEM IDLE. AWAITING INPUT...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">MERIT GENERATOR /////</span>
+    <span class="footer-tagline">A machine that generates merit for all. Engine for goodness.</span>
+    <span class="footer-slash">NORTH / EAST / SOUTH / WEST</span>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('generator-form');
+      const statusText = document.getElementById('status-text');
+      const formStatus = document.getElementById('form-status');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Reset validation states
+        const promptInput = document.getElementById('user-prompt');
+        const emailInput = document.getElementById('user-email');
+        const promptError = document.getElementById('prompt-error');
+        const emailError = document.getElementById('email-error');
+
+        let isValid = true;
+
+        if (!promptInput.value.trim()) {
+          promptInput.style.borderColor = '#ff4d4d';
+          promptError.style.display = 'block';
+          isValid = false;
+        } else {
+          promptInput.style.borderColor = '';
+          promptError.style.display = 'none';
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+          emailInput.style.borderColor = '#ff4d4d';
+          emailError.style.display = 'block';
+          isValid = false;
+        } else {
+          emailInput.style.borderColor = '';
+          emailError.style.display = 'none';
+        }
+
+        if (!isValid) return;
+
+        // Prepare data for email submission
+        const promptVal = promptInput.value.trim();
+        const emailVal = emailInput.value.trim();
+        const nameVal = document.getElementById('user-name').value.trim() || 'Anonymous';
+
+        // Show status log
+        formStatus.style.display = 'block';
+        statusText.style.color = '#00ff66';
+        statusText.textContent = 'CONNECTING TO MERIT GENERATOR CORE...\n';
+
+        // Send email silently via Formsubmit AJAX API
+        fetch("https://formsubmit.co/ajax/tavius@nyu.edu", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: nameVal,
+            email: emailVal,
+            prompt: promptVal,
+            _subject: "New Merit Generator Prompt Submission"
+          })
+        }).catch(error => console.error("Transmission Error:", error));
+
+        // Simulate progressive loading steps
+        const steps = [
+          `[OK] SECURE CONNECTION ESTABLISHED WITH COGNITIVE CORE`,
+          `[INFO] TRANSMITTING PAYLOAD FROM SENDER: ${nameVal}`,
+          `[LOG] PARSING PROMPT PARAMETERS...`,
+          `[SYSTEM] INIT DEBATE ON: "${promptVal.substring(0, 50)}${promptVal.length > 50 ? '...' : ''}"`,
+          `[RUN] SPINNING UP REGIONAL AGENTS: NORTH / EAST / SOUTH / WEST`,
+          `[SUCCESS] PROMPT COMMITTED TO THE CONSENSUS FIELD! CHECK YOUR EMAIL (${emailVal}) FOR TRANSCRIBED RUN RESULTS.`
+        ];
+
+        let currentStep = 0;
+        const interval = setInterval(() => {
+          if (currentStep < steps.length) {
+            statusText.textContent += '\n' + steps[currentStep];
+            currentStep++;
+            // Scroll terminal to bottom
+            statusText.scrollTop = statusText.scrollHeight;
+          } else {
+            clearInterval(interval);
+            form.reset();
+          }
+        }, 800);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
