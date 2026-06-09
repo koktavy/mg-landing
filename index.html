@@ -44,6 +44,194 @@
       overflow-x: hidden;
     }
 
+    /* ── PASSWORD GATE ── */
+    #password-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    #password-gate .gate-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 55%, rgba(200, 150, 62, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 35% at 50% 60%, rgba(200, 150, 62, 0.13) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    #password-gate .gate-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 440px;
+      height: 440px;
+      border-radius: 50%;
+      border: 2px solid var(--amber);
+      box-shadow: 0 0 40px 2px var(--amber-glow), inset 0 0 40px 2px rgba(200, 150, 62, 0.05);
+      animation: ring-pulse 4s ease-in-out infinite;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    #password-gate .gate-ring-inner {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 1px solid rgba(200, 150, 62, 0.18);
+      animation: ring-pulse 4s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+
+    .gate-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 380px;
+      padding: 0 24px;
+    }
+
+    .gate-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    .gate-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .gate-subtitle {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--grey-mid);
+      letter-spacing: 0.08em;
+      margin-bottom: 40px;
+    }
+
+    .gate-input-wrap {
+      width: 100%;
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .gate-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
+      color: var(--white);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      text-align: center;
+    }
+
+    .gate-input::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+      letter-spacing: 0.15em;
+    }
+
+    .gate-input:focus {
+      border-color: var(--amber);
+    }
+
+    .gate-input.error {
+      border-color: #ff4d4d;
+      animation: gate-shake 0.35s ease;
+    }
+
+    @keyframes gate-shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-6px); }
+      40%       { transform: translateX(6px); }
+      60%       { transform: translateX(-4px); }
+      80%       { transform: translateX(4px); }
+    }
+
+    .gate-error {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: #ff4d4d;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      min-height: 16px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .gate-error.visible {
+      opacity: 1;
+    }
+
+    .gate-btn {
+      width: 100%;
+      padding: 14px 24px;
+      background: transparent;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gate-btn:hover {
+      background: var(--amber-dim);
+      box-shadow: 0 0 18px 2px var(--amber-glow);
+    }
+
+    .gate-btn:active {
+      background: rgba(200, 150, 62, 0.25);
+    }
+
+    .gate-divider {
+      width: 32px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      margin: 36px auto 0;
+    }
+
+    #password-gate.gate-unlocking {
+      animation: gate-fade-out 0.5s ease forwards;
+    }
+
+    @keyframes gate-fade-out {
+      to { opacity: 0; pointer-events: none; }
+    }
+
     /* ── NAV ── */
     nav {
       position: fixed;
@@ -1401,6 +1589,32 @@
     </div>
   </section>
 
+  <!-- PASSWORD GATE OVERLAY -->
+  <div id="password-gate" role="dialog" aria-modal="true" aria-label="Access protected">
+    <div class="gate-bg"></div>
+    <div class="gate-ring"></div>
+    <div class="gate-ring-inner"></div>
+    <div class="gate-content">
+      <span class="gate-logo">Merit Generator /////</span>
+      <h1 class="gate-title">Access Required</h1>
+      <p class="gate-subtitle">Enter the access key to continue</p>
+      <div class="gate-input-wrap">
+        <input
+          id="gate-password"
+          class="gate-input"
+          type="password"
+          placeholder="••••••••••••"
+          autocomplete="current-password"
+          autofocus
+          aria-label="Password"
+        >
+      </div>
+      <div class="gate-error" id="gate-error">Incorrect access key</div>
+      <button class="gate-btn" id="gate-submit">Transmit Access Key</button>
+      <div class="gate-divider"></div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <span class="footer-logo">MERIT GENERATOR /////</span>
@@ -1409,6 +1623,55 @@
   </footer>
 
   <script>
+    /* ── PASSWORD GATE ── */
+    (function () {
+      // ↓↓ CHANGE THIS to your chosen password ↓↓
+      var ACCESS_KEY = 'merit2025';
+      // ↑↑ CHANGE THIS to your chosen password ↑↑
+
+      var gate       = document.getElementById('password-gate');
+      var input      = document.getElementById('gate-password');
+      var submitBtn  = document.getElementById('gate-submit');
+      var errorEl    = document.getElementById('gate-error');
+
+      function unlock() {
+        sessionStorage.setItem('mg_access', '1');
+        gate.classList.add('gate-unlocking');
+        gate.addEventListener('animationend', function () {
+          gate.style.display = 'none';
+          gate.setAttribute('aria-hidden', 'true');
+          if (input) input.setAttribute('tabindex', '-1');
+          if (submitBtn) submitBtn.setAttribute('tabindex', '-1');
+        }, { once: true });
+      }
+
+      function tryPassword() {
+        var val = input.value;
+        if (val === ACCESS_KEY) {
+          unlock();
+        } else {
+          errorEl.classList.add('visible');
+          input.classList.add('error');
+          input.addEventListener('animationend', function () {
+            input.classList.remove('error');
+          }, { once: true });
+          input.select();
+        }
+      }
+
+      // Already unlocked this session?
+      if (sessionStorage.getItem('mg_access') === '1') {
+        gate.style.display = 'none';
+      } else {
+        submitBtn.addEventListener('click', tryPassword);
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') tryPassword();
+          errorEl.classList.remove('visible');
+        });
+      }
+    })();
+
+    /* ── FORM SUBMISSION ── */
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('generator-form');
       const statusText = document.getElementById('status-text');
