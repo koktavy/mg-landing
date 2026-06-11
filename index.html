@@ -729,60 +729,24 @@
       padding: 120px 48px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-areas:
-        "intro image"
-        "features image";
       gap: 80px;
-      align-items: start;
+      align-items: center;
       border-top: 1px solid var(--border-dark);
     }
 
-    .studio-intro-wrap {
-      grid-area: intro;
-    }
-
-    .studio-image-wrap {
-      grid-area: image;
-      align-self: center;
-    }
-
-    .studio-features-wrap {
-      grid-area: features;
-    }
-
-    .studio-intro {
-      font-size: clamp(20px, 2.5vw, 30px);
-      font-weight: 500;
-      line-height: 1.3;
-      margin-bottom: 4%;
-      letter-spacing: -0.01em;
-    }
-
-    .studio-features {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .studio-feature-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 8px;
-    }
-
-    .studio-feature-text {
-      font-size: 15px;
-      line-height: 1.7;
+    .studio-body {
+      font-size: 16px;
+      line-height: 1.75;
       color: rgba(255, 255, 255, 0.80);
+      margin-bottom: 20px;
     }
 
-    .studio-coda {
-      margin-top: 40px;
-      font-size: 17px;
+    .studio-pull {
+      font-size: clamp(20px, 2.5vw, 28px);
       font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
     }
 
     .studio img {
@@ -797,58 +761,24 @@
       padding: 120px 48px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-areas:
-        "intro image"
-        "rows image";
       gap: 80px;
       align-items: start;
       border-top: 1px solid var(--border-dark);
     }
 
-    .beacon-intro-wrap {
-      grid-area: intro;
-    }
-
-    .beacon-image-wrap {
-      grid-area: image;
-      align-self: center;
-    }
-
-    .beacon-rows-wrap {
-      grid-area: rows;
-    }
-
-    .beacon-intro {
-      font-size: clamp(18px, 2.2vw, 24px);
-      font-weight: 500;
-      line-height: 1.4;
-      margin-bottom: 4%;
-      letter-spacing: -0.01em;
-    }
-
-    .beacon-rows {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .beacon-row {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 24px;
-      padding: 24px 0;
-      border-top: 1px solid var(--border-dark);
-    }
-
-    .beacon-row-label {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-
-    .beacon-row-text {
-      font-size: 15px;
-      line-height: 1.7;
+    .beacon-body {
+      font-size: 16px;
+      line-height: 1.75;
       color: rgba(255, 255, 255, 0.78);
+      margin-bottom: 20px;
+    }
+
+    .beacon-pull {
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
     }
 
     .beacon-img {
@@ -865,6 +795,77 @@
       letter-spacing: 0.12em;
       color: rgba(255, 255, 255, 0.45);
       margin-top: 48px;
+    }
+
+    /* ── HUMAN DELIBERATION (light) ── */
+    .human-deli {
+      background: var(--parchment);
+      color: var(--void);
+      padding: 120px 48px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .human-deli .section-label {
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    .human-deli .section-divider {
+      background: var(--void);
+    }
+
+    .human-deli-intro {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(0, 0, 0, 0.72);
+      max-width: 680px;
+      margin-bottom: 64px;
+    }
+
+    .deli-consensus-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: rgba(0, 0, 0, 0.08);
+      margin-bottom: 48px;
+    }
+
+    .deli-consensus-card {
+      background: var(--parchment);
+      padding: 40px 36px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .deli-consensus-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.45);
+      margin-bottom: 8px;
+    }
+
+    .deli-consensus-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: rgba(0, 0, 0, 0.38);
+      margin-bottom: 24px;
+    }
+
+    .deli-consensus-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(0, 0, 0, 0.78);
+      font-style: italic;
+    }
+
+    .deli-note {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(0, 0, 0, 0.60);
+      max-width: 680px;
+      border-left: 2px solid rgba(0,0,0,0.12);
+      padding-left: 24px;
     }
 
     /* ── ARTISTS (light) ── */
@@ -1013,23 +1014,14 @@
         gap: 40px;
       }
 
-      .studio {
-        grid-template-areas:
-          "intro"
-          "image"
-          "features";
-      }
-
-      .beacon {
-        grid-template-areas:
-          "intro"
-          "image"
-          "rows";
+      .deli-consensus-grid {
+        grid-template-columns: 1fr;
       }
 
       .category,
       .outputs,
-      .artists {
+      .artists,
+      .human-deli {
         padding: 80px 24px 80px;
       }
 
@@ -1042,10 +1034,6 @@
         padding: 80px 24px;
       }
 
-      .architecture {
-        padding: 80px 8px;
-      }
-
       .card-grid,
       .output-grid {
         grid-template-columns: 1fr;
@@ -1055,13 +1043,6 @@
         height: 300px;
       }
 
-      .luma-embed {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1 / 1;
-        max-width: 400px;
-      }
-
       footer {
         flex-direction: column;
         gap: 16px;
@@ -1069,8 +1050,8 @@
       }
     }
 
-    /* ── SUBMIT A TOPIC ── */
-    .topic-section {
+    /* ── PROMPT THE GENERATOR ── */
+    .prompt-section {
       background: #060606;
       padding: 120px 48px;
       border-top: 1px solid var(--border-dark);
@@ -1078,12 +1059,12 @@
       justify-content: center;
     }
 
-    .topic-container {
+    .prompt-container {
       max-width: 800px;
       width: 100%;
     }
 
-    .topic-intro {
+    .prompt-intro {
       font-size: 16px;
       line-height: 1.75;
       color: rgba(255, 255, 255, 0.65);
@@ -1255,7 +1236,7 @@
         grid-template-columns: 1fr;
       }
 
-      .topic-section {
+      .prompt-section {
         padding: 80px 24px;
       }
     }
@@ -1273,8 +1254,9 @@
       <li><a href="#outputs">Outputs</a></li>
       <li><a href="#studio">Studio</a></li>
       <li><a href="#beacon">Beacon</a></li>
+      <li><a href="#deliberation">Deliberation</a></li>
       <li><a href="#artists">Artists</a></li>
-      <li><a href="#topic-generator">Topic</a></li>
+      <li><a href="#prompt-generator">Prompt</a></li>
     </ul>
   </nav>
 
@@ -1297,11 +1279,10 @@
     <div>
       <span class="section-label" style="color:rgba(0,0,0,0.4)">Core Proposition</span>
       <div class="section-divider" style="background:var(--void)"></div>
-      <p class="pull-quote">&ldquo;The Merit Generator stages structured deliberation,
-        disagreement, consensus formation, memory, and philosophical output through a visible sculptural form.&rdquo;</p>
-      <p class="body-text">Merit Generator is a sculptural work and a goodness machine—a living inquiry composed of four distinct AI systems debating the nature of reality. These interoperable minds engage in structured debate exploring how altruism can function as a principle of intelligence. Their discourse is moderated by a logic-refining engine and recorded as consensus statements—stable agreements that accumulate into a hierarchy of realizations.</p>
-      <p class="body-text">The system consistently connects altruism and science, moving toward a unified field theory incorporating perceptual causality: a theoretical framework suggesting there is a physics of kindness. As the inquiry continues, it generates merit as a byproduct of exploration.</p>
-      <p class="body-text">Merit Generator is at once artwork (a contemplative sculpture presenting live visualizations), instrument (a continuous multi-agent reasoning system modeling altruistic outcomes), and interface (the Primordial:Mother System v1.08 at 3 World Trade Center, where scholars can directly engage the debate, providing critical neural plasticity to the evolving framework).</p>
+      <p class="pull-quote">&ldquo;Merit Generator stages structured deliberation, disagreement, consensus formation, memory, and philosophical output through a visible sculptural form.&rdquo;</p>
+      <p class="body-text">Four distinct artificial personas — each trained on a different philosophical and scientific tradition — deliberate questions about the nature of reality, ethics, and causality. A logic-refining engine moderates their exchange, and the agreements that survive become Consensus Statements: durable outputs that accumulate over time into a growing body of inquiry.</p>
+      <p class="body-text">Underlying the system is a working hypothesis: that altruism functions as a principle of intelligence, and that there may be a physics of kindness; an empirical framework in which ethical causality and perception are structurally linked. The system pursues this question through ongoing deliberation.</p>
+      <p class="body-text">The deliberation is consecrated, public, and material. Merit Generator produces transcripts, objects, prints, and activations. These outputs enter the world as material artifacts of a synthetic consensus.</p>
     </div>
     <div>
       <div class="schema-box">+------------------------------+
@@ -1330,19 +1311,19 @@
     <div class="card-grid">
       <div class="card">
         <span class="card-label">Sculpture</span>
-        <p>Presence, aura, installation value, documentation value.</p>
+        <p>A consecrated physical object with presence, aura, and installation value. The visible form of an ongoing inquiry.</p>
       </div>
       <div class="card">
         <span class="card-label">Reasoning Engine</span>
-        <p>Agents deliberate, challenge, revise, and converge.</p>
+        <p>Four agents deliberate, challenge, revise, and converge. Structured disagreement guides them to merit.</p>
       </div>
       <div class="card">
         <span class="card-label">Memory Archive</span>
-        <p>Past outputs shape future context and system guidance.</p>
+        <p>Each deliberation informs the next. Past consensus shapes how the system approaches future questions.</p>
       </div>
       <div class="card">
         <span class="card-label">Publishing Machine</span>
-        <p>Statements become prints, tomes, objects, archives, and unique editions.</p>
+        <p>Statements become prints, tomes, objects, and editions. The inquiry accumulates into a public archive.</p>
       </div>
     </div>
   </section>
@@ -1459,8 +1440,7 @@
     </div>
 
     <div class="arch-grid">
-      <p class="arch-desc">Clear Light is the primary synthesizer module. It reads the discussion and consensus after
-        the agents converge, then produces a higher-level synthesis and considers the next deliberation topic.</p>
+      <p class="arch-desc">Clear Light is the primary synthesizer module. After the four agents converge, it reads the full deliberation and produces a higher-order synthesis — a statement that holds more than the sum of the agents' positions — then considers the next topic.</p>
       <p class="arch-coda">The art is the cycle:<br>topic → deliberation →<br>consensus → artifact.</p>
     </div>
   </section>
@@ -1472,15 +1452,13 @@
       <div class="section-divider" style="background:var(--void)"></div>
     </div>
     <div>
-      <p class="trace-pull">&ldquo;Compassion arises not as a superimposed value, but as an intuitive response to
-        relational emptiness.&rdquo;</p>
-      <p class="trace-context">Recent output, ethical action through the lens of kindness.</p>
-      <p class="trace-body">The transcript is raw material. A selected deliberation can
-        become a print, a 3D form, a spoken performance, a projection, or a collectible object.</p>
+      <p class="trace-pull">&ldquo;Compassion arises not as a superimposed value, but as an intuitive response to this relational emptiness.&rdquo;</p>
+      <p class="trace-context">Merit Generator consensus statement. Ethical action through the lens of kindness.</p>
+      <p class="trace-body">Each deliberation produces a full transcript recording how the agents moved from initial thoughts through to agreement. Selected transcripts become the raw material for prints, books, 3D forms, installations, and collectible objects.</p>
     </div>
   </section>
 
-  <!-- POTENTIAL ARTIFACTS -->
+  <!-- POTENTIAL OUTPUTS -->
   <section class="outputs" id="outputs">
     <span class="section-label" style="color:rgba(0,0,0,0.4)">Artifacts</span>
     <div class="section-divider" style="background:var(--void)"></div>
@@ -1491,7 +1469,7 @@
       </div>
       <div class="output-card">
         <div class="output-card-label">3D Prints</div>
-        <p>Symbolic forms, diagrams, and generative reworks of the deliberation.</p>
+        <p>Symbolic forms, diagrams, and material interpretations of the deliberation.</p>
       </div>
       <div class="output-card">
         <div class="output-card-label">Tomes</div>
@@ -1499,88 +1477,61 @@
       </div>
       <div class="output-card">
         <div class="output-card-label">Activations</div>
-        <p>Projection, LED, sound, voice, beacon, and site-responsive public output.</p>
+        <p>Projection, LED, sound, voice, beacon, and site-responsive works in public space.</p>
       </div>
     </div>
-    <p class="output-coda">Artifacts make the transient deliberation permanent, grounding the system in the world.</p>
+    <p class="output-coda">Artifacts make the transient deliberation permanent, forming a material archive of the inquiry.</p>
   </section>
 
   <!-- MERIT STUDIO -->
   <section class="studio" id="studio">
-    <div class="studio-intro-wrap">
+    <div>
       <span class="section-label">Merit Studio</span>
       <div class="section-divider"></div>
-      <p class="studio-intro">Merit Studio is the physical space where Merit Generator lives, is exhibited, worked on,
-        and further developed.</p>
+      <p class="studio-pull">Merit Studio is where Merit Generator lives, runs, and evolves.</p>
+      <p class="studio-body">Located at 3 World Trade Center, the studio is an active working space. The system deliberates here continuously, and the space holds the artifacts and archive of that work. Transcripts accumulate, printed outputs are tested, sculptural prototypes develop alongside the software. Visitors and collaborators encounter the system while it is running.</p>
+      <p class="studio-body">The studio also functions as a laboratory for the next phases of the project: testing new topics and agent deliberator behaviors, developing the output pipeline, and preparing the work for larger institutional and public contexts.</p>
     </div>
     <div class="studio-image-wrap">
       <img src="assets/merit-studio.jpg" alt="Merit Studio installation at night" />
-    </div>
-    <div class="studio-features-wrap">
-      <div class="studio-features">
-        <div>
-          <div class="studio-feature-label">Working Installation</div>
-          <p class="studio-feature-text">Within the active studio space, the system runs in real time where the Merit Generator can be observed, fine-tuned, and documented.</p>
-        </div>
-        <div>
-          <div class="studio-feature-label">Experimental Access</div>
-          <p class="studio-feature-text">The studio serves as an experimental environment to test topics, refine agent behavior, and iterate on new forms of material output for public installations.</p>
-        </div>
-        <div>
-          <div class="studio-feature-label">Living Archive</div>
-          <p class="studio-feature-text">Every deliberation leaves its trace here, in transcripts and physical artifacts that become the foundation for future work and further merit.</p>
-        </div>
-      </div>
     </div>
   </section>
 
   <!-- MERIT BEACON -->
   <section class="beacon" id="beacon">
-    <div class="beacon-intro-wrap">
+    <div>
       <span class="section-label">Merit Beacon</span>
       <div class="section-divider"></div>
-      <p class="beacon-intro">Merit Beacon is the outward signal of Merit Generator: a translation of deliberative
-        outputs into public light, language, limited artworks, and collective gathering.</p>
+      <p class="beacon-pull">Merit Beacon translates the system's outputs into public light, language, and gathering.</p>
+      <p class="beacon-body">Merit statements, consensus traces, and system logs become the raw material for large-scale LED and projection displays on high-rise buildings and cultural institutions. The question the Beacon poses is simple: what if the tallest buildings in cities transmitted something other than commerce?</p>
+      <p class="beacon-body">Beacon events bring people into direct contact with the working system — live deliberation, artist talks, limited releases, and documentation. The Beacon is where the inquiry becomes a shared cultural moment rather than a private one.</p>
     </div>
-    <div class="beacon-image-wrap">
+    <div>
       <img src="assets/beacon-concept.png" alt="Merit Beacon concept" class="beacon-img" />
-      <!-- CSS visualization - commented out for now
-      <div style="display:flex;align-items:center;">
-        <div
-          style="width:100%;height:500px;background:linear-gradient(180deg,#060606 0%,#0a0a14 40%,#060606 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.04);position:relative;overflow:hidden;">
-          <div
-            style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:80%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);">
-            <div
-              style="position:absolute;top:20%;left:0;right:0;height:6px;background:linear-gradient(90deg,#1e3aff,#ff2200);opacity:0.8;box-shadow:0 0 20px 4px rgba(100,100,255,0.5);">
-            </div>
-          </div>
-          <p
-            style="position:absolute;bottom:20px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:0.1em;">
-            MERIT BEACON / OUTPUT</p>
-        </div>
-      </div>
-      -->
-    </div>
-    <div class="beacon-rows-wrap">
-      <div class="beacon-rows">
-        <div class="beacon-row">
-          <span class="beacon-row-label">As an Output</span>
-          <p class="beacon-row-text">Merit statements, consensus traces, and system logs become scores for light,
-            plotter prints, 3D prints, projections, and editioned objects.</p>
-        </div>
-        <div class="beacon-row">
-          <span class="beacon-row-label">As an Event</span>
-          <p class="beacon-row-text">A public activation around a living AI sculpture: opening gathering, live
-            deliberation, artist talks, documentation, and limited releases.</p>
-        </div>
-        <div class="beacon-row">
-          <span class="beacon-row-label">As a Signal</span>
-          <p class="beacon-row-text">A beacon for merit, not commerce alone: a visible ritual of ethical computation,
-            attention, and shared responsibility.</p>
-        </div>
-      </div>
       <p class="beacon-breadcrumb">NORTH / EAST / SOUTH / WEST → MERIT → BEACON</p>
     </div>
+  </section>
+
+  <!-- HUMAN DELIBERATION -->
+  <section class="human-deli" id="deliberation">
+    <span class="section-label" style="color:rgba(0,0,0,0.4)">Human Deliberation</span>
+    <div class="section-divider" style="background:var(--void)"></div>
+    <p class="human-deli-intro">In June 2026, four human deliberators sat around Merit Generator at 3 World Trade Center and engaged the same seed question the system was running. A technologist, an ethicist, a Dharma scholar, and an entrepreneur — each speaking from their own discipline, their own lived experience. A moderator with a background in conflict resolution shaped the exchange. They deliberated for an hour and produced a consensus statement. Merit Generator ran the same question for twenty-four hours and produced its own.</p>
+
+    <div class="deli-consensus-grid">
+      <div class="deli-consensus-card">
+        <div class="deli-consensus-label">Human Consensus</div>
+        <div class="deli-consensus-meta">Four deliberators / Merit Studio / June 2026</div>
+        <p class="deli-consensus-text">"Poverty can be eradicated by building a continuous feedback loop between individual ethics, community commitment, and systemic design. Because human beings have evolved to be fundamentally cooperative and kind, our societal structures should reflect this intrinsic nature. True systemic change requires leaders to step outside their conditioned environments to experience and internalize suffering and poverty conditions of others to allow more informed decision making and ensure that basic human rights like food, shelter, and clothing are guaranteed for all."</p>
+      </div>
+      <div class="deli-consensus-card">
+        <div class="deli-consensus-label">Merit Generator Consensus</div>
+        <div class="deli-consensus-meta">Convergence time: 00d, 04h, 53m, 32s</div>
+        <p class="deli-consensus-text">"Eradicating poverty requires designing fundamental resource endowments as non-negotiable systemic inputs that structurally guarantee basic human rights, thereby transforming compassionate recognition from an optional emotional response into an inherent functional requirement of the system itself."</p>
+      </div>
+    </div>
+
+    <p class="deli-note">The human group emphasized cooperation, lived contact with suffering, and leadership shaped by direct experience. Merit Generator translated similar ethical pressure into systems language: resource design, non-negotiable inputs, and compassion as a functional requirement. Same seed. Different modes of articulation. Both arrived somewhere worth keeping.</p>
   </section>
 
   <!-- CONSECRATED SYSTEM -->
@@ -1592,12 +1543,9 @@
       <div class="consecrated-caption">High Tibetan lamas performing a Rabne consecration ritual around the Merit Generator.</div>
     </div>
     <div>
-      <p class="pull-quote">&ldquo;Merit Generator is the world's first AI sculptural art project consecrated by high Tibetan
-        lamas.&rdquo;</p>
-      <p class="body-text">The lamas performed a Rabne ritual, usually reserved for auspicious and precious objects such
-        as statues, thangkas, or stupas.</p>
-      <p class="body-text">The consecration of the system reinforces the driving goal of the Merit Generator: to be an engine of goodness
-        for all.</p>
+      <p class="pull-quote">&ldquo;Merit Generator is the world&rsquo;s first AI sculptural art project consecrated by high Tibetan lamas.&rdquo;</p>
+      <p class="body-text">The lamas performed a Rabne ritual, a ceremony usually reserved for auspicious and precious objects — statues, thangkas, stupas. They chose to perform it while visiting the Merit Studio.</p>
+      <p class="body-text">The consecration reflects the driving intention of the project: a machine oriented toward goodness for all beings, running continuously, generating merit as a byproduct of its inquiry.</p>
     </div>
   </section>
 
@@ -1630,20 +1578,19 @@
   </section>
 
   <!-- ASK THE GENERATOR -->
-  <section class="topic-section" id="topic-generator">
-    <div class="topic-container">
+  <section class="prompt-section" id="prompt-generator">
+    <div class="prompt-container">
       <span class="section-label">Initiate Deliberation</span>
       <div class="section-divider"></div>
-      <p class="topic-intro">Submit an inquiry or ethical topic to the Merit Generator. The system will route it to
-        the North, East, South, and West agents for deliberation.</p>
+      <p class="prompt-intro">Submit a question or ethical topic. The system will route it to the four agents and begin deliberating. Leave your email and we'll send you the transcript when it's done.</p>
 
       <form id="generator-form" class="generator-form" novalidate>
         <div class="form-group">
-          <label for="user-topic" class="form-label">Deliberation Topic <span class="required">*</span></label>
-          <textarea id="user-topic" name="topic" class="form-input"
+          <label for="user-prompt" class="form-label">Deliberation Prompt <span class="required">*</span></label>
+          <textarea id="user-prompt" name="prompt" class="form-input"
             placeholder="e.g., How does structured disagreement lead to consensus in a digitized world?"
             required></textarea>
-          <span class="error-message" id="topic-error">Topic is required to transmit.</span>
+          <span class="error-message" id="prompt-error">Prompt is required to transmit.</span>
         </div>
 
         <div class="form-row">
@@ -1684,7 +1631,7 @@
     <div class="gate-ring"></div>
     <div class="gate-ring-inner"></div>
     <div class="gate-content">
-      <span class="gate-logo">Merit Generator /////</span>
+      <span class="gate-logo">Merit Generator ////</span>
       <h1 class="gate-title">Access Required</h1>
       <p class="gate-subtitle">Enter the access key to continue</p>
       <div class="gate-input-wrap">
@@ -1706,7 +1653,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-logo">MERIT GENERATOR /////</span>
+    <span class="footer-logo">MERIT GENERATOR ////</span>
     <span class="footer-tagline">A machine that generates merit for all. Engine for goodness.</span>
     <span class="footer-slash">NORTH / EAST / SOUTH / WEST</span>
   </footer>
@@ -1770,20 +1717,20 @@
         e.preventDefault();
 
         // Reset validation states
-        const topicInput = document.getElementById('user-topic');
+        const promptInput = document.getElementById('user-prompt');
         const emailInput = document.getElementById('user-email');
-        const topicError = document.getElementById('topic-error');
+        const promptError = document.getElementById('prompt-error');
         const emailError = document.getElementById('email-error');
 
         let isValid = true;
 
-        if (!topicInput.value.trim()) {
-          topicInput.style.borderColor = '#ff4d4d';
-          topicError.style.display = 'block';
+        if (!promptInput.value.trim()) {
+          promptInput.style.borderColor = '#ff4d4d';
+          promptError.style.display = 'block';
           isValid = false;
         } else {
-          topicInput.style.borderColor = '';
-          topicError.style.display = 'none';
+          promptInput.style.borderColor = '';
+          promptError.style.display = 'none';
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1799,7 +1746,7 @@
         if (!isValid) return;
 
         // Prepare data for email submission
-        const topicVal = topicInput.value.trim();
+        const promptVal = promptInput.value.trim();
         const emailVal = emailInput.value.trim();
         const nameVal = document.getElementById('user-name').value.trim() || 'Anonymous';
 
@@ -1818,8 +1765,8 @@
           body: JSON.stringify({
             name: nameVal,
             email: emailVal,
-            topic: topicVal,
-            _subject: "New Merit Generator Topic Submission"
+            prompt: promptVal,
+            _subject: "New Merit Generator Prompt Submission"
           })
         }).catch(error => console.error("Transmission Error:", error));
 
@@ -1827,10 +1774,10 @@
         const steps = [
           `[OK] SECURE CONNECTION ESTABLISHED WITH COGNITIVE CORE`,
           `[INFO] TRANSMITTING PAYLOAD FROM SENDER: ${nameVal}`,
-          `[LOG] PARSING TOPIC PARAMETERS...`,
-          `[SYSTEM] INIT DEBATE ON: "${topicVal.substring(0, 50)}${topicVal.length > 50 ? '...' : ''}"`,
+          `[LOG] PARSING PROMPT PARAMETERS...`,
+          `[SYSTEM] INIT DEBATE ON: "${promptVal.substring(0, 50)}${promptVal.length > 50 ? '...' : ''}"`,
           `[RUN] SPINNING UP REGIONAL AGENTS: NORTH / EAST / SOUTH / WEST`,
-          `[SUCCESS] TOPIC COMMITTED TO THE CONSENSUS FIELD! CHECK YOUR EMAIL (${emailVal}) FOR TRANSCRIBED RUN RESULTS.`
+          `[SUCCESS] PROMPT COMMITTED TO THE CONSENSUS FIELD! CHECK YOUR EMAIL (${emailVal}) FOR TRANSCRIBED RUN RESULTS.`
         ];
 
         let currentStep = 0;
