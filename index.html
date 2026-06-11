@@ -1256,7 +1256,7 @@
       <li><a href="#beacon">Beacon</a></li>
       <li><a href="#deliberation">Deliberation</a></li>
       <li><a href="#artists">Artists</a></li>
-      <li><a href="#prompt-generator">Prompt</a></li>
+      <li><a href="#prompt-generator">Contact</a></li>
     </ul>
   </nav>
 
@@ -1577,36 +1577,43 @@
     </div>
   </section>
 
-  <!-- ASK THE GENERATOR -->
+  <!-- CONTACT FORM -->
   <section class="prompt-section" id="prompt-generator">
     <div class="prompt-container">
-      <span class="section-label">Initiate Deliberation</span>
+      <span class="section-label">Contact</span>
       <div class="section-divider"></div>
-      <p class="prompt-intro">Submit a question or ethical topic. The system will route it to the four agents and begin deliberating. Leave your email and we'll send you the transcript when it's done.</p>
+      <p class="prompt-intro">Reach out with a question, comment, or inquiry. You can also submit an optional deliberation prompt to the Merit Generator.</p>
 
       <form id="generator-form" class="generator-form" novalidate>
         <div class="form-group">
-          <label for="user-prompt" class="form-label">Deliberation Prompt <span class="required">*</span></label>
-          <textarea id="user-prompt" name="prompt" class="form-input"
-            placeholder="e.g., How does structured disagreement lead to consensus in a digitized world?"
+          <label for="user-message" class="form-label">Question / Comment <span class="required">*</span></label>
+          <textarea id="user-message" name="message" class="form-input"
+            placeholder="e.g. How can I support the project?"
             required></textarea>
-          <span class="error-message" id="prompt-error">Prompt is required to transmit.</span>
+          <span class="error-message" id="message-error">Message is required.</span>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="user-name" class="form-label">Name</label>
-            <input type="text" id="user-name" name="name" class="form-input" placeholder="Optional">
+            <label for="user-name" class="form-label">Name <span class="required">*</span></label>
+            <input type="text" id="user-name" name="name" class="form-input" placeholder="Your name" required>
+            <span class="error-message" id="name-error">Name is required.</span>
           </div>
           <div class="form-group">
             <label for="user-email" class="form-label">Email Address <span class="required">*</span></label>
             <input type="email" id="user-email" name="email" class="form-input" placeholder="you@domain.com" required>
-            <span class="error-message" id="email-error">A valid email is required to transmit.</span>
+            <span class="error-message" id="email-error">A valid email is required.</span>
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="user-prompt" class="form-label">Deliberation Prompt (Optional)</label>
+          <textarea id="user-prompt" name="prompt" class="form-input"
+            placeholder="e.g. How does structured disagreement lead to consensus in a digitized world?"></textarea>
+        </div>
+
         <button type="submit" class="submit-btn">
-          <span class="btn-text">Transmit to Field</span>
+          <span class="btn-text">Send Message</span>
           <span class="btn-glow"></span>
         </button>
       </form>
@@ -1717,22 +1724,38 @@
         e.preventDefault();
 
         // Reset validation states
-        const promptInput = document.getElementById('user-prompt');
+        const messageInput = document.getElementById('user-message');
+        const nameInput = document.getElementById('user-name');
         const emailInput = document.getElementById('user-email');
-        const promptError = document.getElementById('prompt-error');
+        const promptInput = document.getElementById('user-prompt');
+
+        const messageError = document.getElementById('message-error');
+        const nameError = document.getElementById('name-error');
         const emailError = document.getElementById('email-error');
 
         let isValid = true;
 
-        if (!promptInput.value.trim()) {
-          promptInput.style.borderColor = '#ff4d4d';
-          promptError.style.display = 'block';
+        // Validate message (required)
+        if (!messageInput.value.trim()) {
+          messageInput.style.borderColor = '#ff4d4d';
+          messageError.style.display = 'block';
           isValid = false;
         } else {
-          promptInput.style.borderColor = '';
-          promptError.style.display = 'none';
+          messageInput.style.borderColor = '';
+          messageError.style.display = 'none';
         }
 
+        // Validate name (required)
+        if (!nameInput.value.trim()) {
+          nameInput.style.borderColor = '#ff4d4d';
+          nameError.style.display = 'block';
+          isValid = false;
+        } else {
+          nameInput.style.borderColor = '';
+          nameError.style.display = 'none';
+        }
+
+        // Validate email (required)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
           emailInput.style.borderColor = '#ff4d4d';
@@ -1746,9 +1769,10 @@
         if (!isValid) return;
 
         // Prepare data for email submission
-        const promptVal = promptInput.value.trim();
+        const messageVal = messageInput.value.trim();
+        const nameVal = nameInput.value.trim();
         const emailVal = emailInput.value.trim();
-        const nameVal = document.getElementById('user-name').value.trim() || 'Anonymous';
+        const promptVal = promptInput.value.trim() || 'None provided';
 
         // Show status log
         formStatus.style.display = 'block';
@@ -1765,19 +1789,20 @@
           body: JSON.stringify({
             name: nameVal,
             email: emailVal,
-            prompt: promptVal,
-            _subject: "New Merit Generator Prompt Submission"
+            message: messageVal,
+            deliberation_prompt: promptVal,
+            _subject: "New Merit Generator Contact Form Submission"
           })
         }).catch(error => console.error("Transmission Error:", error));
 
         // Simulate progressive loading steps
         const steps = [
-          `[OK] SECURE CONNECTION ESTABLISHED WITH COGNITIVE CORE`,
-          `[INFO] TRANSMITTING PAYLOAD FROM SENDER: ${nameVal}`,
-          `[LOG] PARSING PROMPT PARAMETERS...`,
-          `[SYSTEM] INIT DEBATE ON: "${promptVal.substring(0, 50)}${promptVal.length > 50 ? '...' : ''}"`,
-          `[RUN] SPINNING UP REGIONAL AGENTS: NORTH / EAST / SOUTH / WEST`,
-          `[SUCCESS] PROMPT COMMITTED TO THE CONSENSUS FIELD! CHECK YOUR EMAIL (${emailVal}) FOR TRANSCRIBED RUN RESULTS.`
+          `[OK] SECURE CONNECTION ESTABLISHED`,
+          `[INFO] TRANSMITTING MESSAGE FROM: ${nameVal}`,
+          `[LOG] PARSING MESSAGE PARAMETERS...`,
+          `[SYSTEM] MESSAGE: "${messageVal.substring(0, 50)}${messageVal.length > 50 ? '...' : ''}"`,
+          promptVal !== 'None provided' ? `[OPTIONAL] DELIBERATION PROMPT INCLUDED FOR REVIEW` : `[INFO] NO DELIBERATION PROMPT PROVIDED`,
+          `[SUCCESS] MESSAGE TRANSMITTED! WE'LL RESPOND AT ${emailVal} SOON.`
         ];
 
         let currentStep = 0;
