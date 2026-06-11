@@ -437,6 +437,11 @@
       line-height: 1.5;
     }
 
+    .luma-embed {
+      border: none;
+      border-radius: 2px;
+    }
+
     .pull-quote {
       font-size: clamp(22px, 3vw, 36px);
       font-weight: 600;
@@ -516,7 +521,7 @@
 
     .category .section-divider {
       background: var(--void);
-      margin-bottom: 48px;
+      margin-bottom: 4%;
     }
 
     .category-intro {
@@ -680,7 +685,7 @@
 
     .outputs .section-divider {
       background: var(--void);
-      margin-bottom: 48px;
+      margin-bottom: 4%;
     }
 
     .output-grid {
@@ -724,16 +729,32 @@
       padding: 120px 48px;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "intro image"
+        "features image";
       gap: 80px;
-      align-items: center;
+      align-items: start;
       border-top: 1px solid var(--border-dark);
+    }
+
+    .studio-intro-wrap {
+      grid-area: intro;
+    }
+
+    .studio-image-wrap {
+      grid-area: image;
+      align-self: center;
+    }
+
+    .studio-features-wrap {
+      grid-area: features;
     }
 
     .studio-intro {
       font-size: clamp(20px, 2.5vw, 30px);
       font-weight: 500;
       line-height: 1.3;
-      margin-bottom: 48px;
+      margin-bottom: 4%;
       letter-spacing: -0.01em;
     }
 
@@ -776,16 +797,32 @@
       padding: 120px 48px;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "intro image"
+        "rows image";
       gap: 80px;
       align-items: start;
       border-top: 1px solid var(--border-dark);
+    }
+
+    .beacon-intro-wrap {
+      grid-area: intro;
+    }
+
+    .beacon-image-wrap {
+      grid-area: image;
+      align-self: center;
+    }
+
+    .beacon-rows-wrap {
+      grid-area: rows;
     }
 
     .beacon-intro {
       font-size: clamp(18px, 2.2vw, 24px);
       font-weight: 500;
       line-height: 1.4;
-      margin-bottom: 48px;
+      margin-bottom: 4%;
       letter-spacing: -0.01em;
     }
 
@@ -976,6 +1013,20 @@
         gap: 40px;
       }
 
+      .studio {
+        grid-template-areas:
+          "intro"
+          "image"
+          "features";
+      }
+
+      .beacon {
+        grid-template-areas:
+          "intro"
+          "image"
+          "rows";
+      }
+
       .category,
       .outputs,
       .artists {
@@ -1002,6 +1053,13 @@
 
       .beacon-img {
         height: 300px;
+      }
+
+      .luma-embed {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        max-width: 400px;
       }
 
       footer {
@@ -1449,11 +1507,16 @@
 
   <!-- MERIT STUDIO -->
   <section class="studio" id="studio">
-    <div>
+    <div class="studio-intro-wrap">
       <span class="section-label">Merit Studio</span>
       <div class="section-divider"></div>
       <p class="studio-intro">Merit Studio is the physical space where Merit Generator lives, is exhibited, worked on,
-        and allowed to evolve.</p>
+        and further developed.</p>
+    </div>
+    <div class="studio-image-wrap">
+      <img src="assets/merit-studio.jpg" alt="Merit Studio installation at night" />
+    </div>
+    <div class="studio-features-wrap">
       <div class="studio-features">
         <div>
           <div class="studio-feature-label">Working Installation</div>
@@ -1492,11 +1555,32 @@
 
   <!-- MERIT BEACON -->
   <section class="beacon" id="beacon">
-    <div>
+    <div class="beacon-intro-wrap">
       <span class="section-label">Merit Beacon</span>
       <div class="section-divider"></div>
       <p class="beacon-intro">Merit Beacon is the outward signal of Merit Generator: a translation of deliberative
         outputs into public light, language, limited artworks, and collective gathering.</p>
+    </div>
+    <div class="beacon-image-wrap">
+      <img src="assets/beacon-concept.png" alt="Merit Beacon concept" class="beacon-img" />
+      <!-- CSS visualization - commented out for now
+      <div style="display:flex;align-items:center;">
+        <div
+          style="width:100%;height:500px;background:linear-gradient(180deg,#060606 0%,#0a0a14 40%,#060606 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.04);position:relative;overflow:hidden;">
+          <div
+            style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:80%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);">
+            <div
+              style="position:absolute;top:20%;left:0;right:0;height:6px;background:linear-gradient(90deg,#1e3aff,#ff2200);opacity:0.8;box-shadow:0 0 20px 4px rgba(100,100,255,0.5);">
+            </div>
+          </div>
+          <p
+            style="position:absolute;bottom:20px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:0.1em;">
+            MERIT BEACON / OUTPUT</p>
+        </div>
+      </div>
+      -->
+    </div>
+    <div class="beacon-rows-wrap">
       <div class="beacon-rows">
         <div class="beacon-row">
           <span class="beacon-row-label">As an Output</span>
@@ -1516,21 +1600,6 @@
       </div>
       <p class="beacon-breadcrumb">NORTH / EAST / SOUTH / WEST → MERIT → BEACON</p>
     </div>
-    <div style="display:flex;align-items:center;">
-      <div
-        style="width:100%;height:500px;background:linear-gradient(180deg,#060606 0%,#0a0a14 40%,#060606 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.04);position:relative;overflow:hidden;">
-        <!-- simulated beacon building -->
-        <div
-          style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:80%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);">
-          <div
-            style="position:absolute;top:20%;left:0;right:0;height:6px;background:linear-gradient(90deg,#1e3aff,#ff2200);opacity:0.8;box-shadow:0 0 20px 4px rgba(100,100,255,0.5);">
-          </div>
-        </div>
-        <p
-          style="position:absolute;bottom:20px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:0.1em;">
-          MERIT BEACON / OUTPUT</p>
-      </div>
-    </div>
   </section>
 
   <!-- CONSECRATED SYSTEM -->
@@ -1538,8 +1607,8 @@
     <div>
       <span class="section-label">Consecrated System</span>
       <div class="section-divider"></div>
-      <div class="consecrated-caption">High Tibetan lamas performing a Rabne consecration ritual around Merit Generator.
-      </div>
+      <iframe src="https://lumalabs.ai/embed/42bfcfb1-3b74-443f-a996-01f868610d62?mode=sparkles&background=%23ddd&color=%23555&showTitle=false&loadBg=true&logoPosition=bottom-left&infoPosition=bottom-right&cinematicVideo=undefined&showMenu=false" width="500" height="500" frameborder="0" title="luma embed" class="luma-embed"></iframe>
+      <div class="consecrated-caption">High Tibetan lamas performing a Rabne consecration ritual around the Merit Generator.</div>
     </div>
     <div>
       <p class="pull-quote">"Merit Generator is the world's first AI sculptural art project consecrated by high Tibetan
