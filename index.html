@@ -300,66 +300,18 @@
       filter: contrast(1.3) brightness(1);
     }
 
-    .hero-ascii-filter {
+    .hero-noise-filter {
       position: absolute;
       inset: 0;
       z-index: 1;
-      background-image:
-        repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.85) 2px,
-          rgba(0, 0, 0, 0.85) 3px,
-          transparent 0px,
-          transparent 8px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          rgba(0, 0, 0, 0.85) 2px,
-          rgba(0, 0, 0, 0.85) 3px,
-          transparent 2px,
-          transparent 6px
-        );
       pointer-events: none;
     }
 
-    .hero-ascii-filter::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent 0px,
-          rgba(200, 150, 62, 0.2) 1px,
-          rgba(200, 150, 62, 0.08) 2px,
-          transparent 10px
-        );
-      animation: scanline 4s linear infinite;
-    }
-
-    .hero-ascii-filter::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
-      pointer-events: none;
-    }
-
-    @keyframes scanline {
-      0% {
-        transform: translateY(0%);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100%);
-        opacity: 0;
-      }
+    .hero-noise-filter canvas {
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+      mix-blend-mode: multiply;
     }
 
     .hero-bg {
@@ -1302,9 +1254,11 @@
   <!-- HERO -->
   <section class="hero">
     <video class="hero-video" autoplay muted loop playsinline id="hero-video">
-      <source src="assets/hero-vid.mp4" type="video/mp4">
+      <source src="assets/hero-vid-v2-web.mp4" type="video/mp4">
     </video>
-    <div class="hero-ascii-filter"></div>
+    <div class="hero-noise-filter">
+      <canvas id="grain-canvas"></canvas>
+    </div>
     <div class="hero-bg"></div>
     <span class="hero-breadcrumb">NORTH / EAST / SOUTH / WEST → MERIT</span>
     <h1 class="hero-title">Merit<br>Generator</h1>
@@ -1779,6 +1733,60 @@
       if (heroVideo) {
         heroVideo.playbackRate = 0.8;
       }
+    })();
+
+    /* ── DYNAMIC GRAIN ANIMATION ── */
+    (function () {
+      const canvas = document.getElementById('grain-canvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      let animationId;
+      let frameCount = 0;
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function drawGrain() {
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        const buffer = new Uint32Array(imageData.data.buffer);
+        const len = buffer.length;
+
+        for (let i = 0; i < len; i++) {
+          // More dense: 12% of pixels get grain
+          if (Math.random() < 0.12) {
+            // Lighter dark values (60-120 range for medium-dark grays)
+            const value = 60 + Math.floor(Math.random() * 60);
+            // Low alpha for subtlety (20-60 range)
+            const alpha = 20 + Math.floor(Math.random() * 40);
+            buffer[i] = (alpha << 24) | (value << 16) | (value << 8) | value;
+          } else {
+            buffer[i] = 0; // Transparent
+          }
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+      }
+
+      function animate() {
+        frameCount++;
+        // Only update every 8 frames for much slower, calmer movement
+        if (frameCount % 8 === 0) {
+          drawGrain();
+        }
+        animationId = requestAnimationFrame(animate);
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      animate();
+
+      // Clean up on page unload
+      window.addEventListener('beforeunload', () => {
+        cancelAnimationFrame(animationId);
+      });
     })();
 
     /* ── FORM SUBMISSION ── */
