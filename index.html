@@ -600,32 +600,21 @@
       line-height: 1.4;
     }
 
-    /* ── OUTPUT TRACE (light) ── */
-    .output-trace {
+
+
+    /* ── ARTIFACTS (light) ── */
+    .artifacts {
       background: var(--parchment);
       color: var(--void);
       padding: 120px 48px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
     }
 
-    .output-trace .section-label {
+    .artifacts .section-label {
       color: rgba(0, 0, 0, 0.55);
     }
 
-    .output-trace .section-divider {
+    .artifacts .section-divider {
       background: var(--void);
-    }
-
-    .trace-img-wrap {
-      position: relative;
-    }
-
-    .trace-img-wrap img {
-      width: 100%;
-      border-radius: 2px;
     }
 
     .trace-pull {
@@ -649,22 +638,7 @@
       font-size: 16px;
       line-height: 1.75;
       color: rgba(0, 0, 0, 0.72);
-    }
-
-    /* ── POTENTIAL OUTPUTS (light) ── */
-    .artifacts {
-      background: var(--parchment);
-      color: var(--void);
-      padding: 0 48px 120px;
-    }
-
-    .artifacts .section-label {
-      color: rgba(0, 0, 0, 0.55);
-    }
-
-    .artifacts .section-divider {
-      background: var(--void);
-      margin-bottom: 4%;
+      margin-bottom: 20px;
     }
 
     .output-grid {
@@ -672,6 +646,7 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 2px;
       background: rgba(0, 0, 0, 0.08);
+      margin-top: 56px;
     }
 
     .output-card {
@@ -734,47 +709,7 @@
       filter: brightness(0.8);
     }
 
-    /* ── BEACON (dark) ── */
-    .beacon {
-      background: #060606;
-      padding: 120px 48px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-      border-top: 1px solid var(--border-dark);
-    }
 
-    .beacon-body {
-      font-size: 16px;
-      line-height: 1.75;
-      color: rgba(255, 255, 255, 0.78);
-      margin-bottom: 20px;
-    }
-
-    .beacon-pull {
-      font-size: clamp(18px, 2.2vw, 24px);
-      font-weight: 600;
-      line-height: 1.3;
-      letter-spacing: -0.01em;
-      margin-bottom: 28px;
-    }
-
-    .beacon-img {
-      width: 100%;
-      height: 500px;
-      object-fit: cover;
-      border-radius: 2px;
-      filter: brightness(0.7);
-    }
-
-    .beacon-breadcrumb {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      color: rgba(255, 255, 255, 0.45);
-      margin-top: 48px;
-    }
 
     /* ── HUMAN DELIBERATION (light) ── */
     .human-deli {
@@ -998,9 +933,7 @@
 
       .consecrated,
       .core-prop,
-      .output-trace,
       .studio,
-      .beacon,
       .arch-grid {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -1020,19 +953,13 @@
       .consecrated,
       .core-prop,
       .architecture,
-      .output-trace,
-      .studio,
-      .beacon {
+      .studio {
         padding: 80px 24px;
       }
 
       .card-grid,
       .output-grid {
         grid-template-columns: 1fr;
-      }
-
-      .beacon-img {
-        height: 300px;
       }
 
       footer {
@@ -1439,23 +1366,15 @@
     </div>
   </section>
 
-  <!-- RECENT OUTPUT TRACE -->
-  <section class="output-trace" id="trace">
-    <div class="trace-img-wrap">
-      <span class="section-label" style="color:rgba(0,0,0,0.4)">Recent Output Trace</span>
-      <div class="section-divider" style="background:var(--void)"></div>
-    </div>
-    <div>
-      <p class="trace-pull">&ldquo;Compassion arises not as a superimposed value, but as an intuitive response to this relational emptiness.&rdquo;</p>
-      <p class="trace-context">Merit Generator consensus statement. Ethical action through the lens of kindness.</p>
-      <p class="trace-body">Each deliberation produces a full transcript recording how the agents moved from initial thoughts through to agreement. Selected transcripts become the raw material for prints, books, 3D forms, installations, and collectible objects.</p>
-    </div>
-  </section>
-
-  <!-- POTENTIAL OUTPUTS -->
+  <!-- ARTIFACTS -->
   <section class="artifacts" id="artifacts">
     <span class="section-label" style="color:rgba(0,0,0,0.4)">Artifacts</span>
     <div class="section-divider" style="background:var(--void)"></div>
+
+    <p class="trace-pull">&ldquo;Compassion arises not as a superimposed value, but as an intuitive response to this relational emptiness.&rdquo;</p>
+    <p class="trace-context">Merit Generator consensus statement.</p>
+    <p class="trace-body">Each deliberation produces a full transcript recording how the agents moved from initial thoughts through to agreement. Selected transcripts become the raw material for prints, books, 3D forms, installations, and collectible objects.</p>
+
     <div class="output-grid">
       <div class="output-card">
         <div class="output-card-label">Plotter Prints</div>
@@ -1488,21 +1407,6 @@
     </div>
     <div class="studio-image-wrap">
       <img src="assets/merit-studio.jpg" alt="Merit Studio installation at night" />
-    </div>
-  </section>
-
-  <!-- MERIT BEACON -->
-  <section class="beacon" id="beacon">
-    <div>
-      <span class="section-label">Merit Beacon</span>
-      <div class="section-divider"></div>
-      <p class="beacon-pull">Merit Beacon translates the system's outputs into public light, language, and gathering.</p>
-      <p class="beacon-body">Merit statements, consensus traces, and system logs become the raw material for large-scale LED and projection displays on high-rise buildings and cultural institutions. The question the Beacon poses is simple: what if the tallest buildings in cities transmitted something other than commerce?</p>
-      <p class="beacon-body">Beacon events bring people into direct contact with the working system with live deliberation, artist talks, limited releases, and documentation. The Beacon is where the inquiry becomes a shared cultural moment rather than a private one.</p>
-    </div>
-    <div>
-      <img src="assets/beacon-concept.png" alt="Merit Beacon concept" class="beacon-img" />
-      <p class="beacon-breadcrumb">NORTH / EAST / SOUTH / WEST → MERIT → BEACON</p>
     </div>
   </section>
 
