@@ -727,20 +727,26 @@
       background: var(--void);
     }
 
+    .human-deli-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 56px;
+    }
+
     .human-deli-intro {
       font-size: 16px;
       line-height: 1.75;
       color: rgba(0, 0, 0, 0.72);
-      max-width: 680px;
-      margin-bottom: 48px;
+      order: 2;
     }
 
     .human-deli-img {
       width: 100%;
-      max-width: 800px;
       border-radius: 2px;
-      margin-bottom: 64px;
       border: 1px solid rgba(0, 0, 0, 0.08);
+      order: 1;
     }
 
     .deli-consensus-grid {
@@ -939,6 +945,7 @@
         gap: 40px;
       }
 
+      .human-deli-grid,
       .deli-consensus-grid {
         grid-template-columns: 1fr;
       }
@@ -1373,7 +1380,7 @@
 
     <p class="trace-pull">&ldquo;Compassion arises not as a superimposed value, but as an intuitive response to this relational emptiness.&rdquo;</p>
     <p class="trace-context">Merit Generator consensus statement.</p>
-    <p class="trace-body">Each deliberation produces a full transcript recording how the agents moved from initial thoughts through to agreement. Selected transcripts become the raw material for prints, books, 3D forms, installations, and collectible objects.</p>
+    <p class="trace-body">Each deliberation produces a full transcript, recording how the agents moved from initial thoughts through to agreement. Selected transcripts become the raw material for machine-drawn prints, compilation tomes, 3D forms, and public installations.</p>
 
     <div class="output-grid">
       <div class="output-card">
@@ -1414,14 +1421,16 @@
   <section class="human-deli" id="deliberation">
     <span class="section-label" style="color:rgba(0,0,0,0.4)">Human Deliberation</span>
     <div class="section-divider" style="background:var(--void)"></div>
-    <p class="human-deli-intro">In June 2026, four human deliberators sat around Merit Generator at 3 World Trade Center and engaged the same topic question the system was running. A technologist, an ethicist, a Dharma scholar, and an entrepreneur. Each speaking from their own discipline, their own lived experience. A moderator with a background in conflict resolution shaped the exchange. They deliberated for an hour and produced a consensus statement. Merit Generator ran the same question for twenty-four hours and produced its own.</p>
 
-    <img src="assets/human-deliberation.jpeg" alt="Four human deliberators sitting around the Merit Generator during the deliberation session" class="human-deli-img" />
+    <div class="human-deli-grid">
+      <img src="assets/human-deliberation.jpeg" alt="Four human deliberators sitting around the Merit Generator during the deliberation session" class="human-deli-img" />
+      <p class="human-deli-intro">In June 2026, four human deliberators sat around Merit Generator at 3 World Trade Center and engaged the same topic question the system was running. A technologist, an ethicist, a Dharma scholar, and an entrepreneur. Each speaking from their own discipline, their own lived experience. A moderator with a background in conflict resolution shaped the exchange, representing the role of Clear Light in the agentic system. They deliberated for an hour and produced a consensus statement. Merit Generator ran the same question for twenty-four hours and produced its own.<br><br>The human group emphasized cooperation, lived contact with suffering, and leadership shaped by direct experience. Merit Generator translated similar ethical pressure into systems language: resource design, non-negotiable inputs, and compassion as a functional requirement. Same seed. Different modes of articulation. Both arrived somewhere worth keeping.</p>
+    </div>
 
     <div class="deli-consensus-grid">
       <div class="deli-consensus-card">
         <div class="deli-consensus-label">Human Consensus</div>
-        <div class="deli-consensus-meta">Four deliberators / Merit Studio / June 2026</div>
+        <div class="deli-consensus-meta">Convergence time: 00d, 01h, 30m, 00s</div>
         <p class="deli-consensus-text">"Poverty can be eradicated by building a continuous feedback loop between individual ethics, community commitment, and systemic design. Because human beings have evolved to be fundamentally cooperative and kind, our societal structures should reflect this intrinsic nature. True systemic change requires leaders to step outside their conditioned environments to experience and internalize suffering and poverty conditions of others to allow more informed decision making and ensure that basic human rights like food, shelter, and clothing are guaranteed for all."</p>
       </div>
       <div class="deli-consensus-card">
@@ -1431,7 +1440,6 @@
       </div>
     </div>
 
-    <p class="deli-note">The human group emphasized cooperation, lived contact with suffering, and leadership shaped by direct experience. Merit Generator translated similar ethical pressure into systems language: resource design, non-negotiable inputs, and compassion as a functional requirement. Same seed. Different modes of articulation. Both arrived somewhere worth keeping.</p>
   </section>
 
   <!-- CONSECRATED SYSTEM -->
