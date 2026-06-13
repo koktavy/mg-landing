@@ -411,14 +411,21 @@
     .consecrated-caption {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
+      text-align: center;
       color: var(--grey-mid);
       margin-top: 12px;
       line-height: 1.5;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .luma-embed {
       border: none;
       border-radius: 2px;
+      max-width: 600px;
+      margin: 0 auto;
+      display: block;
     }
 
     .pull-quote {
@@ -515,15 +522,23 @@
     .card-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2px;
+      gap: 16px;
       margin-top: 56px;
-      background: rgba(0, 0, 0, 0.08);
     }
 
     .card {
-      background: var(--parchment);
-      padding: 36px 32px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.4);
+      padding: 24px 28px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: var(--amber);
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
     .card-label {
@@ -532,14 +547,14 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: rgba(0, 0, 0, 0.55);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       display: block;
     }
 
     .card p {
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1.65;
-      color: rgba(0, 0, 0, 0.75);
+      color: rgba(0, 0, 0, 0.72);
     }
 
     .category-coda {
@@ -617,6 +632,27 @@
       background: var(--void);
     }
 
+    .artifacts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .artifacts-left {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .artifacts-img {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      display: block;
+      border-radius: 2px;
+    }
+
     .trace-pull {
       font-size: clamp(20px, 2.5vw, 30px);
       font-weight: 600;
@@ -643,16 +679,22 @@
 
     .output-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
-      background: rgba(0, 0, 0, 0.08);
-      margin-top: 56px;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
 
     .output-card {
-      background: var(--parchment);
-      padding: 36px 28px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.4);
+      padding: 24px 28px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .output-card:hover {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: var(--amber);
+      transform: translateX(4px);
     }
 
     .output-card-label {
@@ -661,20 +703,13 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: rgba(0, 0, 0, 0.55);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .output-card p {
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.65;
       color: rgba(0, 0, 0, 0.72);
-    }
-
-    .output-coda {
-      margin-top: 48px;
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--void);
     }
 
     /* ── MERIT STUDIO (dark) ── */
@@ -744,6 +779,9 @@
 
     .human-deli-img {
       width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      display: block;
       border-radius: 2px;
       border: 1px solid rgba(0, 0, 0, 0.08);
       order: 1;
@@ -945,9 +983,33 @@
         gap: 40px;
       }
 
+      .artifacts-grid,
       .human-deli-grid,
       .deli-consensus-grid {
         grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .artifacts-grid {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .artifacts-content {
+        order: 1;
+      }
+
+      .artifacts-img {
+        order: 2;
+        padding: 0 8%;
+      }
+
+      .output-grid {
+        order: 3;
+      }
+
+      .artifacts-left {
+        display: contents;
       }
 
       .category,
@@ -964,9 +1026,12 @@
         padding: 80px 24px;
       }
 
-      .card-grid,
-      .output-grid {
+      .card-grid {
         grid-template-columns: 1fr;
+      }
+
+      .output-grid {
+        gap: 12px;
       }
 
       footer {
@@ -1378,29 +1443,36 @@
     <span class="section-label" style="color:rgba(0,0,0,0.4)">Artifacts</span>
     <div class="section-divider" style="background:var(--void)"></div>
 
-    <p class="trace-pull">&ldquo;Compassion arises not as a superimposed value, but as an intuitive response to this relational emptiness.&rdquo;</p>
-    <p class="trace-context">Merit Generator consensus statement.</p>
-    <p class="trace-body">Each deliberation produces a full transcript, recording how the agents moved from initial thoughts through to agreement. Selected transcripts become the raw material for machine-drawn prints, compilation tomes, 3D forms, and public installations.</p>
+    <div class="artifacts-grid">
+      <div class="artifacts-left">
+        <div class="artifacts-content">
+          <p class="trace-pull">&ldquo;Compassion arises not as a superimposed value, but as an intuitive response to this relational emptiness.&rdquo;</p>
+          <p class="trace-context">Merit Generator consensus statement.</p>
+          <p class="trace-body">Each deliberation produces a full transcript, recording how the agents moved from initial thoughts through to agreement. Selected transcripts become the raw material for machine-drawn prints, compilation tomes, 3D forms, and public installations. Artifacts make the transient deliberation permanent, forming a material archive of the inquiry.</p>
+        </div>
 
-    <div class="output-grid">
-      <div class="output-card">
-        <div class="output-card-label">Plotter Prints</div>
-        <p>Machine drawn Consensus Statements, ASCII art, and discussion fragments.</p>
+        <div class="output-grid">
+          <div class="output-card">
+            <div class="output-card-label">Plotter Prints</div>
+            <p>Machine drawn Consensus Statements, ASCII art, and discussion fragments.</p>
+          </div>
+          <div class="output-card">
+            <div class="output-card-label">3D Prints</div>
+            <p>Symbolic forms, diagrams, and material interpretations of the deliberation.</p>
+          </div>
+          <div class="output-card">
+            <div class="output-card-label">Tomes</div>
+            <p>Compilations of transcripts, Consensus Statements, and annotated runs.</p>
+          </div>
+          <div class="output-card">
+            <div class="output-card-label">Activations</div>
+            <p>Projection, LED, sound, voice, beacon, and site-responsive works in public space.</p>
+          </div>
+        </div>
       </div>
-      <div class="output-card">
-        <div class="output-card-label">3D Prints</div>
-        <p>Symbolic forms, diagrams, and material interpretations of the deliberation.</p>
-      </div>
-      <div class="output-card">
-        <div class="output-card-label">Tomes</div>
-        <p>Compilations of transcripts, Consensus Statements, and annotated runs.</p>
-      </div>
-      <div class="output-card">
-        <div class="output-card-label">Activations</div>
-        <p>Projection, LED, sound, voice, beacon, and site-responsive works in public space.</p>
-      </div>
+
+      <img src="assets/tome-flat.jpeg" alt="Merit Generator tome laying flat" class="artifacts-img" />
     </div>
-    <p class="output-coda">Artifacts make the transient deliberation permanent, forming a material archive of the inquiry.</p>
   </section>
 
   <!-- MERIT STUDIO -->
@@ -1461,14 +1533,8 @@
   <section class="artists" id="artists">
     <span class="section-label" style="color:rgba(0,0,0,0.4)">Artist Bios</span>
     <div class="section-divider" style="background:var(--void)"></div>
-    <p class="artists-intro">Merit Generator is created by Mehow Skalski, Ori Carino, and Tavius Koktavy at the Merit Studio with help from many community contributors across various roles and disciplines.</p>
+    <p class="artists-intro">Merit Generator is created by Ori Carino, Mehow Skalski, and Tavius Koktavy at the Merit Studio with help from many community contributors across various roles and disciplines.</p>
     <div class="artist-rows">
-      <div class="artist-row">
-        <span class="artist-name">Mehow Skalski</span>
-        <p class="artist-bio">Technology and new media artist working across AI systems, VR/AR, 3D scanning, 360 video,
-          immersive documentation, sculptural technology, systems architecture, and logic. Co-creator of Merit Generator
-          and Merit Beacon.</p>
-      </div>
       <div class="artist-row">
         <span class="artist-name">Ori Carino</span>
         <p class="artist-bio">NYC-based artist whose work spans painting, installation, ritual imagery, and contemporary
@@ -1476,9 +1542,14 @@
           work extending into public-facing outputs.</p>
       </div>
       <div class="artist-row">
+        <span class="artist-name">Mehow Skalski</span>
+        <p class="artist-bio">Technology and new media artist working across AI systems, VR/AR, 3D scanning, 360 video,
+          immersive documentation, sculptural technology, systems architecture, and logic. Co-creator of Merit Generator
+          and Merit Beacon.</p>
+      </div>
+      <div class="artist-row">
         <span class="artist-name">Tavius Koktavy</span>
-        <p class="artist-bio">Co-creator of Merit Generator and Merit Beacon, augmented and virtual reality expert, and
-          artist working with 3D scanning projects and system logic.</p>
+        <p class="artist-bio">New York-based artist and technologist whose practice spans XR, 3D scanning, AI systems, and interactive spatial technology. Co-creator of Merit Generator, responsible for programming and tuning the system with guiding expertise in immersive and computational systems.</p>
       </div>
     </div>
 
