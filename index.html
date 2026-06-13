@@ -1251,7 +1251,7 @@
       <li><a href="#studio">Studio</a></li>
       <li><a href="#deliberation">Deliberation</a></li>
       <li><a href="#artists">Team</a></li>
-      <li><a href="#prompt-generator">Contact</a></li>
+      <li><a href="#support">Support</a></li>
     </ul>
   </nav>
 
@@ -1438,6 +1438,55 @@
     </div>
   </section>
 
+  <!-- DELIBERATION TOPIC SUBMISSION -->
+  <section class="prompt-section" id="deliberation-submit">
+    <div class="prompt-container">
+      <span class="section-label">Submit a Deliberation Topic</span>
+      <div class="section-divider"></div>
+      <p class="prompt-intro">Pose a topic for the Merit Generator to deliberate. Topics that align with the system's inquiry into kindness, altruism, and ethical causality may be selected for future deliberations.</p>
+
+      <form id="deliberation-form" class="generator-form" novalidate>
+        <div class="form-group">
+          <label for="delib-topic" class="form-label">Deliberation Topic <span class="required">*</span></label>
+          <textarea id="delib-topic" name="topic" class="form-input"
+            placeholder="e.g. How does structured disagreement lead to consensus in a digitized world?"
+            required></textarea>
+          <span class="error-message" id="topic-error">Deliberation topic is required.</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="delib-name" class="form-label">Name <span class="required">*</span></label>
+            <input type="text" id="delib-name" name="name" class="form-input" placeholder="Your name" required>
+            <span class="error-message" id="delib-name-error">Name is required.</span>
+          </div>
+          <div class="form-group">
+            <label for="delib-email" class="form-label">Email Address <span class="required">*</span></label>
+            <input type="email" id="delib-email" name="email" class="form-input" placeholder="you@domain.com" required>
+            <span class="error-message" id="delib-email-error">A valid email is required.</span>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span class="btn-text">Submit Topic</span>
+          <span class="btn-glow"></span>
+        </button>
+      </form>
+
+      <div class="form-status" id="delib-form-status" aria-live="polite">
+        <div class="status-terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">MG-DELIBERATION-LOG</span>
+          </div>
+          <div class="terminal-body" id="delib-status-text">SYSTEM IDLE. AWAITING INPUT...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ARTIFACTS -->
   <section class="artifacts" id="artifacts">
     <span class="section-label" style="color:rgba(0,0,0,0.4)">Artifacts</span>
@@ -1574,18 +1623,33 @@
     </div> -->
   </section>
 
-  <!-- CONTACT FORM -->
-  <section class="prompt-section" id="prompt-generator">
+  <!-- SUPPORT SECTION -->
+  <section class="prompt-section" id="support">
     <div class="prompt-container">
-      <span class="section-label">Contact</span>
+      <span class="section-label">Support</span>
       <div class="section-divider"></div>
-      <p class="prompt-intro">Reach out with a question, comment, or inquiry. You can also submit an optional deliberation prompt to the Merit Generator.</p>
+
+      <div style="margin-bottom: 48px;">
+        <p class="pull-quote" style="color: var(--white); font-size: clamp(20px, 2.5vw, 28px); margin-bottom: 24px;">Why does it need to be funded now?</p>
+        <p class="prompt-intro" style="margin-bottom: 20px;">To accelerate building an institution-grade distribution prototype through the following priorities:</p>
+
+        <div style="margin-left: 24px; margin-bottom: 40px;">
+          <p class="prompt-intro" style="margin-bottom: 12px;">• Procure an expanded Merit Studio</p>
+          <p class="prompt-intro" style="margin-bottom: 12px;">• Build out of the institution unit: molds, hardware, building the brain</p>
+          <p class="prompt-intro" style="margin-bottom: 12px;">• Expert consultations to continue developing the agent personas</p>
+          <p class="prompt-intro" style="margin-bottom: 12px;">• Deliberative symposiums with field experts alongside the Merit Generator</p>
+          <p class="prompt-intro" style="margin-bottom: 12px;">• Merit Beacon activation</p>
+          <p class="prompt-intro" style="margin-bottom: 12px;">• Artist's sandwich fund</p>
+        </div>
+      </div>
+
+      <p class="prompt-intro" style="margin-bottom: 40px;">Reach out with questions, inquiries, or to discuss support opportunities.</p>
 
       <form id="generator-form" class="generator-form" novalidate>
         <div class="form-group">
-          <label for="user-message" class="form-label">Question / Comment <span class="required">*</span></label>
+          <label for="user-message" class="form-label">Message <span class="required">*</span></label>
           <textarea id="user-message" name="message" class="form-input"
-            placeholder="e.g. How can I support the project?"
+            placeholder="e.g. I'm interested in supporting the project."
             required></textarea>
           <span class="error-message" id="message-error">Message is required.</span>
         </div>
@@ -1601,12 +1665,6 @@
             <input type="email" id="user-email" name="email" class="form-input" placeholder="you@domain.com" required>
             <span class="error-message" id="email-error">A valid email is required.</span>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label for="user-prompt" class="form-label">Deliberation Prompt (Optional)</label>
-          <textarea id="user-prompt" name="prompt" class="form-input"
-            placeholder="e.g. How does structured disagreement lead to consensus in a digitized world?"></textarea>
         </div>
 
         <button type="submit" class="submit-btn">
@@ -1773,8 +1831,110 @@
       });
     })();
 
-    /* ── FORM SUBMISSION ── */
+    /* ── FORM SUBMISSIONS ── */
     document.addEventListener('DOMContentLoaded', () => {
+      // Deliberation Topic Form
+      const delibForm = document.getElementById('deliberation-form');
+      const delibStatusText = document.getElementById('delib-status-text');
+      const delibFormStatus = document.getElementById('delib-form-status');
+
+      delibForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Reset validation states
+        const topicInput = document.getElementById('delib-topic');
+        const nameInput = document.getElementById('delib-name');
+        const emailInput = document.getElementById('delib-email');
+
+        const topicError = document.getElementById('topic-error');
+        const nameError = document.getElementById('delib-name-error');
+        const emailError = document.getElementById('delib-email-error');
+
+        let isValid = true;
+
+        // Validate topic (required)
+        if (!topicInput.value.trim()) {
+          topicInput.style.borderColor = '#ff4d4d';
+          topicError.style.display = 'block';
+          isValid = false;
+        } else {
+          topicInput.style.borderColor = '';
+          topicError.style.display = 'none';
+        }
+
+        // Validate name (required)
+        if (!nameInput.value.trim()) {
+          nameInput.style.borderColor = '#ff4d4d';
+          nameError.style.display = 'block';
+          isValid = false;
+        } else {
+          nameInput.style.borderColor = '';
+          nameError.style.display = 'none';
+        }
+
+        // Validate email (required)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+          emailInput.style.borderColor = '#ff4d4d';
+          emailError.style.display = 'block';
+          isValid = false;
+        } else {
+          emailInput.style.borderColor = '';
+          emailError.style.display = 'none';
+        }
+
+        if (!isValid) return;
+
+        // Prepare data for email submission
+        const topicVal = topicInput.value.trim();
+        const nameVal = nameInput.value.trim();
+        const emailVal = emailInput.value.trim();
+
+        // Show status log
+        delibFormStatus.style.display = 'block';
+        delibStatusText.style.color = '#00ff66';
+        delibStatusText.textContent = 'CONNECTING TO DELIBERATION PROTOCOL...\n';
+
+        // Send email silently via Formsubmit AJAX API
+        fetch("https://formsubmit.co/ajax/tavius@nyu.edu", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: nameVal,
+            email: emailVal,
+            deliberation_topic: topicVal,
+            _subject: "New Merit Generator Deliberation Topic Submission"
+          })
+        }).catch(error => console.error("Transmission Error:", error));
+
+        // Simulate progressive loading steps
+        const steps = [
+          `[OK] SECURE CONNECTION ESTABLISHED`,
+          `[INFO] TOPIC SUBMITTED BY: ${nameVal}`,
+          `[LOG] PARSING DELIBERATION PARAMETERS...`,
+          `[SYSTEM] TOPIC: "${topicVal.substring(0, 60)}${topicVal.length > 60 ? '...' : ''}"`,
+          `[INFO] TOPIC FORWARDED TO MERIT GENERATOR CORE FOR REVIEW`,
+          `[SUCCESS] SUBMISSION COMPLETE! THANK YOU FOR CONTRIBUTING TO THE MERIT GENERATOR DELIBERATION.`
+        ];
+
+        let currentStep = 0;
+        const interval = setInterval(() => {
+          if (currentStep < steps.length) {
+            delibStatusText.textContent += '\n' + steps[currentStep];
+            currentStep++;
+            // Scroll terminal to bottom
+            delibStatusText.scrollTop = delibStatusText.scrollHeight;
+          } else {
+            clearInterval(interval);
+            delibForm.reset();
+          }
+        }, 800);
+      });
+
+      // Support Form
       const form = document.getElementById('generator-form');
       const statusText = document.getElementById('status-text');
       const formStatus = document.getElementById('form-status');
@@ -1786,7 +1946,6 @@
         const messageInput = document.getElementById('user-message');
         const nameInput = document.getElementById('user-name');
         const emailInput = document.getElementById('user-email');
-        const promptInput = document.getElementById('user-prompt');
 
         const messageError = document.getElementById('message-error');
         const nameError = document.getElementById('name-error');
@@ -1831,7 +1990,6 @@
         const messageVal = messageInput.value.trim();
         const nameVal = nameInput.value.trim();
         const emailVal = emailInput.value.trim();
-        const promptVal = promptInput.value.trim() || 'None provided';
 
         // Show status log
         formStatus.style.display = 'block';
@@ -1839,7 +1997,7 @@
         statusText.textContent = 'CONNECTING TO MERIT GENERATOR CORE...\n';
 
         // Send email silently via Formsubmit AJAX API
-        fetch("https://formsubmit.co/ajax/tavius@nyu.edu", {
+        fetch("https://formsubmit.co/ajax/marygrace.jarrett@gmail.com", {
           method: "POST",
           headers: {
             'Content-Type': 'application/json',
@@ -1848,9 +2006,8 @@
           body: JSON.stringify({
             name: nameVal,
             email: emailVal,
-            contact_message: messageVal,
-            deliberation_prompt: promptVal,
-            _subject: "New Merit Generator Contact Form Submission"
+            support_message: messageVal,
+            _subject: "New Merit Generator Support Form Submission"
           })
         }).catch(error => console.error("Transmission Error:", error));
 
@@ -1860,8 +2017,7 @@
           `[INFO] TRANSMITTING MESSAGE FROM: ${nameVal}`,
           `[LOG] PARSING MESSAGE PARAMETERS...`,
           `[SYSTEM] MESSAGE: "${messageVal.substring(0, 50)}${messageVal.length > 50 ? '...' : ''}"`,
-          promptVal !== 'None provided' ? `[OPTIONAL] DELIBERATION PROMPT INCLUDED FOR REVIEW` : `[INFO] NO DELIBERATION PROMPT PROVIDED`,
-          `[SUCCESS] MESSAGE TRANSMITTED! WE'LL RESPOND AT ${emailVal} SOON.`
+          `[SUCCESS] MESSAGE TRANSMITTED! Thank you, we'll respond to ${emailVal} soon.`
         ];
 
         let currentStep = 0;
